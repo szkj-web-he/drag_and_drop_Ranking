@@ -1,0 +1,289 @@
+@use "./normalize.scss" as *;
+
+$fontFamily: "alipuhui", sans-serif;
+
+$color: #212121;
+
+html,
+.wrapper,
+body,
+body > div:not([class], [id]) {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.wrapper {
+    background-color: #fff;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-flow: column nowrap;
+}
+
+.question {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-flow: row wrap;
+    margin-bottom: 32px;
+    width: 100%;
+    flex: 0 0 auto;
+}
+
+.questionContent {
+    color: #212121;
+    font-family: $fontFamily;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: 0.2px;
+}
+
+.questionDes {
+    color: #757575;
+    font-family: $fontFamily;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: 0.2px;
+}
+
+@mixin Total {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    font-family: $fontFamily;
+    letter-spacing: 0.2px;
+    color: #bdbdbd;
+}
+
+/****** 上方原始数据部分 start *********/
+.warehouse_wrap {
+    margin-top: 32px;
+    margin-bottom: 24px;
+    flex: 0 0 auto;
+}
+
+.warehouse_total {
+    @include Total();
+}
+
+.warehouse_totalVal {
+    color: #209ca8;
+    margin: 0 5px;
+
+    &.red {
+        color: #ff7745;
+    }
+}
+
+.warehouse_items {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    align-content: flex-start;
+    flex-flow: row wrap;
+    margin-top: 8px;
+    padding-bottom: 24px;
+    max-height: 178px;
+    overflow: auto;
+    overflow-x: hidden;
+    min-height: 100px;
+    box-sizing: border-box;
+}
+
+.warehouse_scrollWrap {
+    margin-top: 8px;
+    box-sizing: border-box;
+}
+
+.warehouse_scrollBody {
+    min-height: 100px;
+    max-height: 178px;
+    position: relative;
+    display: flex;
+    padding-bottom: 24px;
+    align-items: center;
+    justify-content: flex-start;
+    align-content: flex-start;
+    flex-flow: row wrap;
+}
+
+.placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.warehouse_body {
+    width: calc(100% + 20px);
+}
+/****** 上方原始数据部分 end *********/
+
+@mixin Item {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ebebeb;
+    color: #4d4d4d;
+    font-family: $fontFamily;
+    font-size: 14px;
+    line-height: 21px;
+    letter-spacing: 0.2px;
+    display: inline-flex;
+    touch-action: none;
+    max-width: 100%;
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: pre-wrap;
+    align-items: center;
+    justify-content: center;
+    flex-flow: row wrap;
+}
+
+.dragItem {
+    cursor: pointer;
+    @include Item();
+    margin-right: 20px;
+    margin-bottom: 16px;
+    &.gray {
+        position: relative;
+        border-color: transparent;
+        overflow: hidden;
+        * {
+            visibility: hidden;
+        }
+        &::after {
+            content: "";
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            background-color: #ebebeb;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 50;
+            box-sizing: border-box;
+        }
+    }
+}
+
+.dragPortal {
+    @include Item();
+    background-color: #fff;
+
+    box-shadow: 0px 2px 8px rgba(26, 26, 26, 0.08), 0px 2px 4px rgba(26, 26, 26, 0.03);
+}
+
+.dragPortalContainer {
+    z-index: 50;
+    position: absolute;
+    pointer-events: none;
+}
+
+.hr {
+    width: 100%;
+    height: 1px;
+    background-color: #ebebeb;
+    margin-bottom: 40px;
+}
+
+/********** 下方 放置区域 start ******************/
+.parking_wrap {
+    flex: 1 1 auto;
+    width: 100%;
+}
+
+.parking_mobileWrap {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.parking_main {
+    padding: 12px 20px;
+    background: #fafafa;
+    border-radius: 10px;
+}
+
+.parking_head {
+    letter-spacing: 0.2px;
+    font-family: $fontFamily;
+    color: #bdbdbd;
+    font-size: 14px;
+    line-height: 21px;
+    margin-bottom: 12px;
+}
+
+.parking_list {
+    width: 100%;
+    height: 160px;
+    border-radius: 6px;
+    margin-top: 20px;
+    &:first-child {
+        margin-top: 0;
+    }
+    display: flex;
+    align-items: flex-start;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-content: center;
+    box-shadow: 0px 2px 8px rgba(26, 26, 26, 0.08), 0px 2px 4px rgba(26, 26, 26, 0.03);
+    background-color: #fff;
+}
+
+.parking_item {
+    height: 100%;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+}
+
+.parking_item__border {
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+        right: 0;
+        height: 80px;
+        width: 1px;
+        background-color: #ebebeb;
+    }
+}
+
+.parking_placeholder {
+    font-family: $fontFamily;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 34px;
+    line-height: 46px;
+    color: #ebebeb;
+}
+
+/********** 下方 放置区域 end ******************/
+
+// .dragInput {
+//     width: 1px;
+//     height: 1px;
+//     // visibility: hidden;
+//     // opacity: 0;
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+// }
