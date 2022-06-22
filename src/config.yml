@@ -1,8 +1,8 @@
 # The question text can be modified by the survey owner.
-question: "Q1. 请对您最喜欢的三种东西进行排序。"
+question: "Q1. 请对您最喜欢的十种东西进行排序。"
 
 # The instructions to the question can be modified by the survey owner. It's recommended that the existing instructions are included in the customised instructions.
-instruction: "从中选出3个放入框内排序"
+instruction: "从中选出10个放入框内排序"
 
 # For the purposes of reproducing a bug
 options:
@@ -44,7 +44,7 @@ options:
     ]
 
 # How many options you can ranking
-column: 3
+column: 10
 
 # options instruction
-optionsInstruction: "您最喜欢的三种东西"
+optionsInstruction: "您最喜欢的10种东西"

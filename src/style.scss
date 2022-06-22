@@ -4,6 +4,10 @@ $fontFamily: "alipuhui", sans-serif;
 
 $color: #212121;
 
+@mixin Transition {
+    transition: all 0.2s linear;
+}
+
 html,
 .wrapper,
 body,
@@ -66,7 +70,6 @@ body > div:not([class], [id]) {
 
 /****** 上方原始数据部分 start *********/
 .warehouse_wrap {
-    margin-top: 32px;
     margin-bottom: 24px;
     flex: 0 0 auto;
 }
@@ -203,6 +206,7 @@ body > div:not([class], [id]) {
 .parking_wrap {
     flex: 1 1 auto;
     width: 100%;
+    overflow: hidden;
 }
 
 .parking_mobileWrap {
@@ -213,7 +217,7 @@ body > div:not([class], [id]) {
 }
 
 .parking_main {
-    padding: 12px 20px;
+    padding: 12px 20px 20px;
     background: #fafafa;
     border-radius: 10px;
 }
@@ -242,6 +246,10 @@ body > div:not([class], [id]) {
     align-content: center;
     box-shadow: 0px 2px 8px rgba(26, 26, 26, 0.08), 0px 2px 4px rgba(26, 26, 26, 0.03);
     background-color: #fff;
+    @include Transition();
+    &.active {
+        background-color: #e9f7f8;
+    }
 }
 
 .parking_item {
@@ -251,6 +259,41 @@ body > div:not([class], [id]) {
     align-items: center;
     justify-content: center;
     flex: 0 0 auto;
+    &::before {
+        content: "";
+        width: calc(100% - 24px);
+        height: calc(100% - 24px);
+        position: absolute;
+        left: 12px;
+        top: 12px;
+        box-sizing: border-box;
+        border-radius: 6px;
+        pointer-events: none;
+        border: 1px dashed transparent;
+        @include Transition();
+    }
+    &.parking_item__active {
+        &::before {
+            border-color: #22a6b3;
+        }
+    }
+
+    .dragItem {
+        margin-right: 0;
+        margin-bottom: 0;
+    }
+
+    &.parking_item__fill {
+        .parking_placeholder {
+            top: 16px;
+            left: 16px;
+            transform: translate(0, 0);
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 24px;
+            color: #757575;
+        }
+    }
 }
 
 .parking_item__border {
@@ -274,6 +317,12 @@ body > div:not([class], [id]) {
     font-size: 34px;
     line-height: 46px;
     color: #ebebeb;
+    position: absolute;
+    letter-spacing: 0.15px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    @include Transition();
 }
 
 /********** 下方 放置区域 end ******************/

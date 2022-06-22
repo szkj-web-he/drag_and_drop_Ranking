@@ -52,6 +52,7 @@ const Main: React.FC = () => {
         from?: string;
         value: OptionProps;
     }>();
+
     const [activeId, setActiveId] = useState<string>();
 
     /* <------------------------------------ **** STATE END **** ------------------------------------ */
@@ -82,12 +83,15 @@ const Main: React.FC = () => {
                 content: res.data.content,
             },
         };
-        console.log(JSON.stringify(res));
         setActiveId(res.to);
     };
 
     const handleDragEnd = () => {
-        const data = selectDataRef.current;
+        const data = selectDataRef.current ? deepCloneData(selectDataRef.current) : undefined;
+
+        setActiveId(undefined);
+        selectDataRef.current = undefined;
+
         if (data?.to == data?.from) {
             return;
         }
@@ -106,19 +110,6 @@ const Main: React.FC = () => {
             if (n >= 0) {
                 placementListRef.current[n].value = undefined;
             }
-        } else {
-            for (let i = 0; i < listRef.current.length; ) {
-                const item = listRef.current[i];
-                if (item.code === data?.value.code) {
-                    n = i;
-                    i = listRef.current.length;
-                } else {
-                    ++i;
-                }
-            }
-            if (n >= 0) {
-                listRef.current.splice(n, 1);
-            }
         }
 
         //这里是添加
@@ -127,6 +118,13 @@ const Main: React.FC = () => {
                 const item = placementListRef.current[i];
 
                 if (item.id === data.to) {
+                    if (n >= 0 && item.value) {
+                        placementListRef.current[n].value = {
+                            code: item.value.code,
+                            content: item.value.content,
+                        };
+                    }
+
                     item.value = {
                         code: data.value.code,
                         content: data.value.content,
@@ -136,16 +134,35 @@ const Main: React.FC = () => {
                     ++i;
                 }
             }
-        } else {
-            data &&
-                listRef.current.push({
-                    code: data.value.code,
-                    content: data.value.content,
-                });
         }
+
+        /**
+         * 过滤掉选中的
+         * 剩下的还原到上方的原始那一栏
+         */
+        const arr: Array<OptionProps> = [];
+        const selectData: Record<string, true> = {};
+        for (let i = 0; i < placementListRef.current.length; i++) {
+            const item = placementListRef.current[i];
+            if (item.value) {
+                selectData[item.value.code] = true;
+            }
+        }
+        const options = comms.config.options ?? [];
+        for (let i = 0; i < options.length; i++) {
+            const item = options[i];
+            if (!selectData[item.code]) {
+                arr.push({
+                    code: item.code,
+                    content: item.content,
+                });
+            }
+        }
+
+        listRef.current = [...arr];
+
         setList([...listRef.current]);
         setPlacementList([...placementListRef.current]);
-        setActiveId(undefined);
     };
 
     /* <------------------------------------ **** FUNCTION END **** ------------------------------------ */

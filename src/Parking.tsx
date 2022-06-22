@@ -1,6 +1,6 @@
 /* <------------------------------------ **** DEPENDENCE IMPORT START **** ------------------------------------ */
 /** This section will include all the necessary dependence for this tsx file */
-import React, { useLayoutEffect, useMemo, useState } from "react";
+import React from "react";
 import { comms } from ".";
 import { Drag } from "./Drag";
 import { DragBox } from "./DragBox";
@@ -17,7 +17,13 @@ interface TempProps extends PublicTempProps {
 
 /* <------------------------------------ **** INTERFACE END **** ------------------------------------ */
 /* <------------------------------------ **** FUNCTION COMPONENT START **** ------------------------------------ */
-const Temp: React.FC<TempProps> = ({ list, mobileStatus, activeId }) => {
+const Temp: React.FC<TempProps> = ({
+    list,
+    mobileStatus,
+    activeId,
+    handleDragMove,
+    handleDragEnd,
+}) => {
     /* <------------------------------------ **** STATE START **** ------------------------------------ */
     /************* This section will include this component HOOK function *************/
 
@@ -30,9 +36,9 @@ const Temp: React.FC<TempProps> = ({ list, mobileStatus, activeId }) => {
     /************* This section will include this component general function *************/
     let arr: Array<Array<ParkingProps>> = [];
     if (list.length > 6) {
+        let index = -1;
         for (let i = 0; i < list.length; i++) {
             const item = list[i];
-            let index = -1;
             if (!(i % 6)) {
                 ++index;
                 arr[index] = [item];
@@ -50,8 +56,10 @@ const Temp: React.FC<TempProps> = ({ list, mobileStatus, activeId }) => {
 
             <div className="parking_container">
                 {arr.map((row, n) => {
+                    const active = row.some((item) => item.id === activeId);
+
                     return (
-                        <div key={`row${n}`} className="parking_list">
+                        <div key={`row${n}`} className={`parking_list${active ? " active" : ""}`}>
                             {row.map((item, index) => {
                                 const classList = ["parking_item"];
                                 if (item.value) {
@@ -80,6 +88,7 @@ const Temp: React.FC<TempProps> = ({ list, mobileStatus, activeId }) => {
                                     <DragBox
                                         className={classList.join(" ")}
                                         key={item.id}
+                                        id={item.id}
                                         style={{
                                             width,
                                         }}
@@ -96,6 +105,19 @@ const Temp: React.FC<TempProps> = ({ list, mobileStatus, activeId }) => {
                                                 activeClassName="gray"
                                                 className="dragItem parking_value"
                                                 portalClassName="dragPortal"
+                                                handleDragMove={({ name }) => {
+                                                    if (item.value) {
+                                                        handleDragMove({
+                                                            data: {
+                                                                code: item.value.code,
+                                                                content: item.value.content,
+                                                            },
+                                                            to: name,
+                                                            from: item.id,
+                                                        });
+                                                    }
+                                                }}
+                                                handleDragEnd={handleDragEnd}
                                             >
                                                 <span
                                                     dangerouslySetInnerHTML={{

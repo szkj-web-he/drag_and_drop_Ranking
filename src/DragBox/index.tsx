@@ -15,7 +15,7 @@ export interface DragBoxProps extends React.HTMLAttributes<HTMLDivElement> {
     /**
      * key of this component
      */
-    key: string;
+    id: string;
     /**
      *
      */
@@ -24,7 +24,7 @@ export interface DragBoxProps extends React.HTMLAttributes<HTMLDivElement> {
 /* <------------------------------------ **** INTERFACE END **** ------------------------------------ */
 /* <------------------------------------ **** FUNCTION COMPONENT START **** ------------------------------------ */
 export const DragBox = forwardRef<HTMLDivElement, DragBoxProps>(
-    ({ key, children, ...props }, ref) => {
+    ({ id, children, ...props }, ref) => {
         DragBox.displayName = "DragBox";
         /* <------------------------------------ **** STATE START **** ------------------------------------ */
         /************* This section will include this component HOOK function *************/
@@ -36,10 +36,10 @@ export const DragBox = forwardRef<HTMLDivElement, DragBoxProps>(
         /************* This section will include this component parameter *************/
         useLayoutEffect(() => {
             boxes.push({
-                id: key,
+                id,
                 el: cRef.current,
             });
-        }, [boxes, key]);
+        }, [boxes, id]);
 
         /* <------------------------------------ **** PARAMETER END **** ------------------------------------ */
         /* <------------------------------------ **** FUNCTION START **** ------------------------------------ */
@@ -47,7 +47,6 @@ export const DragBox = forwardRef<HTMLDivElement, DragBoxProps>(
         /* <------------------------------------ **** FUNCTION END **** ------------------------------------ */
         return (
             <div
-                key={key}
                 ref={(el) => {
                     cRef.current = el;
                     if (typeof ref === "function") {
