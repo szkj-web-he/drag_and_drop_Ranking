@@ -70,6 +70,16 @@ const Main: React.FC = () => {
         };
     }, []);
 
+    useEffect(() => {
+        const arr: (string | null)[] = [];
+        for (let i = 0; i < placementList.length; i++) {
+            const item = placementList[i];
+            arr.push(item.value?.code ?? null);
+        }
+        comms.state = arr;
+        console.log(JSON.stringify(arr));
+    }, [placementList]);
+
     /* <------------------------------------ **** PARAMETER END **** ------------------------------------ */
     /* <------------------------------------ **** FUNCTION START **** ------------------------------------ */
     /************* This section will include this component general function *************/
