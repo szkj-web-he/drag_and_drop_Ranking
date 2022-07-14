@@ -71,13 +71,26 @@ const Main: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        const arr: (string | null)[] = [];
-        for (let i = 0; i < placementList.length; i++) {
-            const item = placementList[i];
-            arr.push(item.value?.code ?? null);
+        //一维开放
+        const options = comms.config.options ?? [];
+
+        const data: Record<string, string> = {};
+        for (let i = 0; i < options.length; i++) {
+            const item = options[i];
+
+            let value = '';
+            for (let j = 0; j < placementList.length;) {
+                const _item = placementList[j];
+                if (_item.value?.code === item.code) {
+                    value = String(j + 1);
+                    j = placementList.length;
+                } else {
+                    ++j;
+                }
+            }
+            data[item.code] = value;
         }
-        comms.state = arr;
-        console.log(JSON.stringify(arr));
+        comms.state = data;
     }, [placementList]);
 
     /* <------------------------------------ **** PARAMETER END **** ------------------------------------ */
@@ -108,7 +121,7 @@ const Main: React.FC = () => {
         //这里是删除
         let n = -1;
         if (data?.from) {
-            for (let i = 0; i < placementListRef.current.length; ) {
+            for (let i = 0; i < placementListRef.current.length;) {
                 const item = placementListRef.current[i];
                 if (item.id === data.from) {
                     n = i;
@@ -124,7 +137,7 @@ const Main: React.FC = () => {
 
         //这里是添加
         if (data?.to) {
-            for (let i = 0; i < placementListRef.current.length; ) {
+            for (let i = 0; i < placementListRef.current.length;) {
                 const item = placementListRef.current[i];
 
                 if (item.id === data.to) {
