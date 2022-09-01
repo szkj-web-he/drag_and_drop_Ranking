@@ -4,11 +4,11 @@ import "./style.scss";
 import React, { useEffect, useRef, useState } from "react";
 import { deepCloneData, OptionProps, ParkingProps } from "./unit";
 
-import { PluginComms, ConfigYML } from "@possie-engine/dr-plugin-sdk";
-import { isMobile } from "./isMobile";
-import { Warehouse } from "./warehouse";
-import Parking from "./Parking";
+import { ConfigYML, PluginComms } from "@possie-engine/dr-plugin-sdk";
 import { BoxItem, DragContext } from "./dragContext";
+import Parking from "./Parking";
+import { ScrollComponent } from "./Scroll";
+import { Warehouse } from "./warehouse";
 
 export const comms = new PluginComms({
     defaultConfig: new ConfigYML(),
@@ -26,7 +26,6 @@ export const comms = new PluginComms({
 const Main: React.FC = () => {
     /* <------------------------------------ **** STATE START **** ------------------------------------ */
     /************* This section will include this component HOOK function *************/
-    const [mobileStatus, setMobileStatus] = useState(isMobile());
 
     const listRef = useRef(comms.config.options ? deepCloneData(comms.config.options) : []);
     const [list, setList] = useState([...listRef.current]);
@@ -58,17 +57,6 @@ const Main: React.FC = () => {
     /* <------------------------------------ **** STATE END **** ------------------------------------ */
     /* <------------------------------------ **** PARAMETER START **** ------------------------------------ */
     /************* This section will include this component parameter *************/
-    useEffect(() => {
-        const fn = () => {
-            setMobileStatus(isMobile());
-        };
-
-        window.addEventListener("resize", fn);
-        fn();
-        return () => {
-            window.removeEventListener("resize", fn);
-        };
-    }, []);
 
     useEffect(() => {
         //一维开放
@@ -78,8 +66,8 @@ const Main: React.FC = () => {
         for (let i = 0; i < options.length; i++) {
             const item = options[i];
 
-            let value = '';
-            for (let j = 0; j < placementList.length;) {
+            let value = "";
+            for (let j = 0; j < placementList.length; ) {
                 const _item = placementList[j];
                 if (_item.value?.code === item.code) {
                     value = String(j + 1);
@@ -121,7 +109,7 @@ const Main: React.FC = () => {
         //这里是删除
         let n = -1;
         if (data?.from) {
-            for (let i = 0; i < placementListRef.current.length;) {
+            for (let i = 0; i < placementListRef.current.length; ) {
                 const item = placementListRef.current[i];
                 if (item.id === data.from) {
                     n = i;
@@ -137,7 +125,7 @@ const Main: React.FC = () => {
 
         //这里是添加
         if (data?.to) {
-            for (let i = 0; i < placementListRef.current.length;) {
+            for (let i = 0; i < placementListRef.current.length; ) {
                 const item = placementListRef.current[i];
 
                 if (item.id === data.to) {
@@ -191,37 +179,41 @@ const Main: React.FC = () => {
     /* <------------------------------------ **** FUNCTION END **** ------------------------------------ */
     return (
         <div className={`wrapper`}>
-            <div className="question">
-                <div
-                    className="questionContent"
-                    dangerouslySetInnerHTML={{
-                        __html: comms.config.question ?? "",
-                    }}
-                />
-                <div
-                    className="questionDes"
-                    dangerouslySetInnerHTML={{
-                        __html: `(${comms.config.instruction ?? ""})`,
-                    }}
-                />
-            </div>
-            <DragContext.Provider value={{ boxes: boxesRef.current }}>
-                <Warehouse
-                    list={list}
-                    mobileStatus={mobileStatus}
-                    handleDragMove={handleDragMove}
-                    handleDragEnd={handleDragEnd}
-                />
+            <ScrollComponent
+                hidden={{
+                    x: true,
+                }}
+            >
+                <div className="question">
+                    <div
+                        className="questionContent"
+                        dangerouslySetInnerHTML={{
+                            __html: comms.config.question ?? "",
+                        }}
+                    />
+                    <div
+                        className="questionDes"
+                        dangerouslySetInnerHTML={{
+                            __html: `(${comms.config.instruction ?? ""})`,
+                        }}
+                    />
+                </div>
+                <DragContext.Provider value={{ boxes: boxesRef.current }}>
+                    <Warehouse
+                        list={list}
+                        handleDragMove={handleDragMove}
+                        handleDragEnd={handleDragEnd}
+                    />
 
-                <div className="hr" />
-                <Parking
-                    list={placementList}
-                    mobileStatus={mobileStatus}
-                    handleDragMove={handleDragMove}
-                    handleDragEnd={handleDragEnd}
-                    activeId={activeId}
-                />
-            </DragContext.Provider>
+                    <div className="hr" />
+                    <Parking
+                        list={placementList}
+                        handleDragMove={handleDragMove}
+                        handleDragEnd={handleDragEnd}
+                        activeId={activeId}
+                    />
+                </DragContext.Provider>
+            </ScrollComponent>
         </div>
     );
 };

@@ -17,13 +17,7 @@ interface TempProps extends PublicTempProps {
 
 /* <------------------------------------ **** INTERFACE END **** ------------------------------------ */
 /* <------------------------------------ **** FUNCTION COMPONENT START **** ------------------------------------ */
-const Temp: React.FC<TempProps> = ({
-    list,
-    mobileStatus,
-    activeId,
-    handleDragMove,
-    handleDragEnd,
-}) => {
+const Temp: React.FC<TempProps> = ({ list, activeId, handleDragMove, handleDragEnd }) => {
     /* <------------------------------------ **** STATE START **** ------------------------------------ */
     /************* This section will include this component HOOK function *************/
 
@@ -103,7 +97,7 @@ const Temp: React.FC<TempProps> = ({
                                                     content: item.value.content,
                                                 }}
                                                 activeClassName="gray"
-                                                className="dragItem parking_value"
+                                                className="parking_value"
                                                 portalClassName="dragPortal"
                                                 handleDragMove={({ name }) => {
                                                     if (item.value) {
@@ -118,6 +112,7 @@ const Temp: React.FC<TempProps> = ({
                                                     }
                                                 }}
                                                 handleDragEnd={handleDragEnd}
+                                                handleDragCancel={handleDragEnd}
                                             >
                                                 <span
                                                     dangerouslySetInnerHTML={{
@@ -139,13 +134,9 @@ const Temp: React.FC<TempProps> = ({
     /* <------------------------------------ **** FUNCTION END **** ------------------------------------ */
     return (
         <div className="parking_wrap">
-            {mobileStatus ? (
-                <div className="parking_mobileWrap">{content}</div>
-            ) : (
-                <ScrollComponent bodyClassName="parking_scrollBody" hidden={{ x: true }}>
-                    {content}
-                </ScrollComponent>
-            )}
+            <ScrollComponent bodyClassName="parking_scrollBody" hidden={{ x: true }}>
+                {content}
+            </ScrollComponent>
         </div>
     );
 };

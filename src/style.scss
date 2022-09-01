@@ -26,6 +26,11 @@ body > div:not([class], [id]) {
     align-items: flex-start;
     justify-content: flex-start;
     flex-flow: column nowrap;
+    background-image: url("./Image/bg.png");
+    background-size: 100% auto;
+    background-position: 0 90%;
+    padding: 0 24px;
+    box-sizing: border-box;
 }
 
 .question {
@@ -85,22 +90,6 @@ body > div:not([class], [id]) {
     &.red {
         color: #ff7745;
     }
-}
-
-.warehouse_items {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    align-content: flex-start;
-    flex-flow: row wrap;
-    margin-top: 8px;
-    padding-bottom: 24px;
-    max-height: 178px;
-    overflow: auto;
-    overflow-x: hidden;
-    min-height: 100px;
-    box-sizing: border-box;
 }
 
 .warehouse_scrollWrap {
@@ -207,13 +196,6 @@ body > div:not([class], [id]) {
     flex: 1 1 auto;
     width: 100%;
     overflow: hidden;
-}
-
-.parking_mobileWrap {
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
 }
 
 .parking_main {
@@ -327,12 +309,84 @@ body > div:not([class], [id]) {
 
 /********** 下方 放置区域 end ******************/
 
-// .dragInput {
-//     width: 1px;
-//     height: 1px;
-//     // visibility: hidden;
-//     // opacity: 0;
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-// }
+/*************** btn_wrap start *****************************/
+.btn_wrap {
+    padding: 8px 18px 8px 22px;
+    position: relative;
+    cursor: pointer;
+    display: inline-flex;
+    margin-right: 4px;
+    margin-bottom: 16px;
+}
+
+.btn_small_top {
+    border-radius: 1px;
+    border-width: 0.78px 0.78px 0 0.78px;
+    border-style: solid;
+    width: calc(100% - 10.3px - 5.91px);
+    height: 2.25px;
+    left: 10.3px;
+    top: 0;
+    position: absolute;
+    border-color: transparent;
+    border-image: linear-gradient(3.39deg, #79a3ab -1497.07%, #005469 91.33%);
+    clip-path: inset(0 round 10px);
+}
+
+.btn_small_right {
+    width: 0.78px;
+    height: calc(100% - 2.45px - 10.47px);
+    position: absolute;
+    right: 5.91px;
+    top: 2.45px;
+    background: linear-gradient(0deg, #79a3ab -48%, #005469 109.3%);
+}
+
+.btn_small_bottom {
+}
+
+.btn_small_leftTop {
+    width: 0.78px;
+    height: 1.08px;
+    position: absolute;
+    left: 10.3px;
+    top: 2.45px;
+    background: linear-gradient(0.11deg, #79a3ab -3191.66%, #005469 319.95%);
+}
+
+.btn_small_leftBottom {
+    width: 0.78px;
+    height: calc(100% - 14px - 2.45px);
+    position: absolute;
+    left: 10.3px;
+    bottom: 2.45px;
+    background: linear-gradient(0deg, #79a3ab -48%, #005469 109.3%);
+}
+
+.btn_cloud_left {
+    width: 25.3px;
+    height: 8.6px;
+    position: absolute;
+    top: 4.4px;
+    left: 0;
+    background-image: url("./Image/icon_cloudLeft.png");
+    background-size: 100% 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: top left;
+}
+
+.btn_cloud_right {
+    width: 28.57px;
+    height: 7.5px;
+    position: absolute;
+    bottom: 3.52px;
+    right: 0;
+    background-image: url("./Image/icon_cloudRight.png");
+    background-size: 100% 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: top left;
+}
+
+/*************** btn_wrap end *****************************/

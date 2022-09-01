@@ -30,10 +30,6 @@ export interface ParkingProps {
 
 export interface PublicTempProps {
     /**
-     * 是否为手机端
-     */
-    mobileStatus: boolean;
-    /**
      * 拖拽move的回调
      */
     handleDragMove: (res: { data: OptionProps; to?: string; from?: string }) => void;

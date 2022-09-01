@@ -12,6 +12,7 @@ import { DragMoveProps, DragPramsProps, OptionProps, PointProps } from "../unit"
 import { stopSelect } from "../Scroll/Unit/noSelected";
 import { getScrollValue } from "../getScrollValue";
 import { BoxItem, useDragContext } from "../dragContext";
+import Btn from "../btn";
 /* <------------------------------------ **** DEPENDENCE IMPORT END **** ------------------------------------ */
 /* <------------------------------------ **** INTERFACE START **** ------------------------------------ */
 /** This section will include all the interface for this tsx file */
@@ -21,6 +22,8 @@ export interface DragProps extends React.HTMLAttributes<HTMLDivElement> {
     handleDragMove?: (res: DragMoveProps) => void;
 
     handleDragEnd?: (res: DragPramsProps) => void;
+
+    handleDragCancel?: () => void;
 
     children?: React.ReactNode;
 
@@ -42,6 +45,7 @@ export const Drag = forwardRef<HTMLDivElement, DragProps>(
             handleDragStart,
             handleDragEnd,
             handleDragMove,
+            handleDragCancel,
             onMouseDown,
             onTouchStart,
             onTouchMove,
@@ -171,11 +175,8 @@ export const Drag = forwardRef<HTMLDivElement, DragProps>(
             handleMove(e.pageX, e.pageY, e.clientX, e.clientY);
         };
 
-        // 当鼠标 或者手 弹起时的通用事件
-        const handleUp = (x: number, y: number, clientX: number, clientY: number) => {
+        const restDrag = () => {
             timer.current && window.clearTimeout(timer.current);
-            handleDragEnd?.({ x, y, clientX, clientY });
-
             document.onselectstart = selectedFn.current;
             point.current = {
                 x: 0,
@@ -187,8 +188,27 @@ export const Drag = forwardRef<HTMLDivElement, DragProps>(
             };
             setPosition(undefined);
             selectedFn.current = null;
+            window.removeEventListener("blur", cancelDrag);
         };
 
+        const cancelDrag = () => {
+            restDrag();
+            handleDragCancel?.();
+        };
+
+        // 当鼠标 或者手 弹起时的通用事件
+        const handleUp = (x: number, y: number, clientX: number, clientY: number) => {
+            handleDragEnd?.({ x, y, clientX, clientY });
+
+            restDrag();
+        };
+
+        const handleMouseCancel = () => {
+            mouseDownStatus.current = false;
+            document.removeEventListener("mousemove", handleMouseMove);
+            document.removeEventListener("mouseup", handleMouseUp);
+            restDrag();
+        };
         /**
          * 鼠标松开
          */
@@ -197,6 +217,7 @@ export const Drag = forwardRef<HTMLDivElement, DragProps>(
             mouseDownStatus.current = false;
             document.removeEventListener("mousemove", handleMouseMove);
             document.removeEventListener("mouseup", handleMouseUp);
+            window.removeEventListener("blur", cancelDrag);
         };
 
         // 手或者鼠标 按下的通用事件
@@ -257,7 +278,7 @@ export const Drag = forwardRef<HTMLDivElement, DragProps>(
             handleDown(e);
             document.addEventListener("mousemove", handleMouseMove);
             document.addEventListener("mouseup", handleMouseUp);
-
+            window.addEventListener("blur", handleMouseCancel);
             mouseDownStatus.current = true;
         };
 
@@ -270,6 +291,7 @@ export const Drag = forwardRef<HTMLDivElement, DragProps>(
                 return;
             }
             handleDown(e);
+            window.addEventListener("blur", cancelDrag);
             touchStartStatus.current = true;
         };
 
@@ -300,28 +322,6 @@ export const Drag = forwardRef<HTMLDivElement, DragProps>(
             touchStartStatus.current = false;
         };
 
-        /**
-         * 失焦时
-         */
-        // const handleBlur = () => {
-        //     timer.current && window.clearTimeout(timer.current);
-        //     document.onselectstart = selectedFn.current;
-        //     point.current = {
-        //         x: 0,
-        //         y: 0,
-        //         offsetX: 0,
-        //         offsetY: 0,
-        //         width: 0,
-        //         height: 0,
-        //     };
-        //     setPosition(undefined);
-        //     selectedFn.current = null;
-        //     touchStartStatus.current = false;
-        //     mouseDownStatus.current = false;
-        //     document.removeEventListener("mousemove", handleMouseMove);
-        //     document.removeEventListener("mouseup", handleMouseUp);
-        // };
-
         /* <------------------------------------ **** FUNCTION END **** ------------------------------------ */
         const classList: string[] = [];
         className && classList.push(className);
@@ -331,7 +331,7 @@ export const Drag = forwardRef<HTMLDivElement, DragProps>(
         }
         return (
             <>
-                <div
+                <Btn
                     {...props}
                     ref={ref}
                     onMouseDown={handleMouseDown}
@@ -341,7 +341,7 @@ export const Drag = forwardRef<HTMLDivElement, DragProps>(
                     className={classList.join(" ")}
                 >
                     {children}
-                </div>
+                </Btn>
                 {!!position &&
                     createPortal(
                         <div
