@@ -344,7 +344,7 @@ export const Drag = forwardRef<HTMLDivElement, DragProps>(
                 </Btn>
                 {!!position &&
                     createPortal(
-                        <div
+                        <Btn
                             className={
                                 "dragPortalContainer" +
                                 (portalClassName ? ` ${portalClassName}` : "")
@@ -359,7 +359,7 @@ export const Drag = forwardRef<HTMLDivElement, DragProps>(
                             dangerouslySetInnerHTML={props.dangerouslySetInnerHTML}
                         >
                             {children}
-                        </div>,
+                        </Btn>,
                         document.querySelector("body>div") ?? document.body,
                     )}
             </>

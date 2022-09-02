@@ -4,7 +4,6 @@ import React from "react";
 import { comms } from ".";
 import { Drag } from "./Drag";
 import { DragBox } from "./DragBox";
-import { ScrollComponent } from "./Scroll";
 import { ParkingProps, PublicTempProps } from "./unit";
 /* <------------------------------------ **** DEPENDENCE IMPORT END **** ------------------------------------ */
 /* <------------------------------------ **** INTERFACE START **** ------------------------------------ */
@@ -98,7 +97,6 @@ const Temp: React.FC<TempProps> = ({ list, activeId, handleDragMove, handleDragE
                                                 }}
                                                 activeClassName="gray"
                                                 className="parking_value"
-                                                portalClassName="dragPortal"
                                                 handleDragMove={({ name }) => {
                                                     if (item.value) {
                                                         handleDragMove({
@@ -132,13 +130,7 @@ const Temp: React.FC<TempProps> = ({ list, activeId, handleDragMove, handleDragE
     );
 
     /* <------------------------------------ **** FUNCTION END **** ------------------------------------ */
-    return (
-        <div className="parking_wrap">
-            <ScrollComponent bodyClassName="parking_scrollBody" hidden={{ x: true }}>
-                {content}
-            </ScrollComponent>
-        </div>
-    );
+    return <div className="parking_wrap">{content}</div>;
 };
 /* <------------------------------------ **** FUNCTION COMPONENT END **** ------------------------------------ */
 export default Temp;

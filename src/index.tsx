@@ -183,6 +183,7 @@ const Main: React.FC = () => {
                 hidden={{
                     x: true,
                 }}
+                bodyClassName="wrapperBody"
             >
                 <div className="question">
                     <div
@@ -204,8 +205,8 @@ const Main: React.FC = () => {
                         handleDragMove={handleDragMove}
                         handleDragEnd={handleDragEnd}
                     />
-
                     <div className="hr" />
+
                     <Parking
                         list={placementList}
                         handleDragMove={handleDragMove}

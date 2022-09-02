@@ -20,6 +20,7 @@ const Temp = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
         /* <------------------------------------ **** STATE END **** ------------------------------------ */
         /* <------------------------------------ **** PARAMETER START **** ------------------------------------ */
         /************* This section will include this component parameter *************/
+
         /* <------------------------------------ **** PARAMETER END **** ------------------------------------ */
         /* <------------------------------------ **** FUNCTION START **** ------------------------------------ */
         /************* This section will include this component general function *************/
@@ -33,6 +34,15 @@ const Temp = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
                 <div className="btn_small_leftBottom" />
                 <div className="btn_cloud_left" />
                 <div className="btn_cloud_right" />
+                <div className="btn_out_top" />
+                <div className="btn_out_right" />
+                <div className="btn_out_left" />
+                <div className="btn_out_bottom" />
+                <div className="btn_out_leftTop" />
+                <div className="btn_repeat_leftTop" />
+                <div className="btn_repeat_rightTop" />
+                <div className="btn_repeat_leftBottom" />
+                <div className="btn_repeat_rightBottom" />
                 {children}
             </div>
         );

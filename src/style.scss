@@ -29,7 +29,12 @@ body > div:not([class], [id]) {
     background-image: url("./Image/bg.png");
     background-size: 100% auto;
     background-position: 0 90%;
-    padding: 0 24px;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+}
+
+.wrapperBody {
+    padding: 0 22px;
     box-sizing: border-box;
 }
 
@@ -44,7 +49,7 @@ body > div:not([class], [id]) {
 }
 
 .questionContent {
-    color: #212121;
+    color: #005469;
     font-family: $fontFamily;
     font-style: normal;
     font-weight: 500;
@@ -54,7 +59,7 @@ body > div:not([class], [id]) {
 }
 
 .questionDes {
-    color: #757575;
+    color: rgba(#005469, 0.5);
     font-family: $fontFamily;
     font-style: normal;
     font-weight: 400;
@@ -84,7 +89,7 @@ body > div:not([class], [id]) {
 }
 
 .warehouse_totalVal {
-    color: #209ca8;
+    color: #35b5c7;
     margin: 0 5px;
 
     &.red {
@@ -118,96 +123,85 @@ body > div:not([class], [id]) {
 }
 
 .warehouse_body {
-    width: calc(100% + 20px);
+    width: calc(100% + 4px);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-flow: row wrap;
+    align-content: flex-start;
 }
 /****** 上方原始数据部分 end *********/
 
-@mixin Item {
-    padding: 8px 12px;
-    border-radius: 6px;
-    border: 1px solid #ebebeb;
-    color: #4d4d4d;
-    font-family: $fontFamily;
-    font-size: 14px;
-    line-height: 21px;
-    letter-spacing: 0.2px;
-    display: inline-flex;
-    touch-action: none;
-    max-width: 100%;
-    flex: 0 0 auto;
-    box-sizing: border-box;
-    word-wrap: break-word;
-    word-break: break-word;
-    white-space: pre-wrap;
-    align-items: center;
-    justify-content: center;
-    flex-flow: row wrap;
-}
-
-.dragItem {
-    cursor: pointer;
-    @include Item();
-    margin-right: 20px;
-    margin-bottom: 16px;
-    &.gray {
-        position: relative;
-        border-color: transparent;
-        overflow: hidden;
-        * {
-            visibility: hidden;
-        }
-        &::after {
-            content: "";
-            overflow: hidden;
-            width: 100%;
-            height: 100%;
-            background-color: #ebebeb;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 50;
-            box-sizing: border-box;
-        }
-    }
-}
-
-.dragPortal {
-    @include Item();
-    background-color: #fff;
-
-    box-shadow: 0px 2px 8px rgba(26, 26, 26, 0.08), 0px 2px 4px rgba(26, 26, 26, 0.03);
-}
-
 .dragPortalContainer {
     z-index: 50;
-    position: absolute;
+    position: absolute !important;
     pointer-events: none;
+    box-sizing: border-box;
+    background-color: #fff;
 }
 
 .hr {
     width: 100%;
-    height: 1px;
-    background-color: #ebebeb;
     margin-bottom: 40px;
+    height: 19px;
+    background-image: url("./Image/hr.png");
+    background-position: bottom right;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    position: relative;
+    box-sizing: border-box;
+    &::after {
+        content: "";
+        width: calc(100% - 238.16px);
+        height: 0.73px;
+        background-color: #005469;
+        left: 0;
+        bottom: 0;
+        position: absolute;
+    }
 }
 
 /********** 下方 放置区域 start ******************/
 .parking_wrap {
-    flex: 1 1 auto;
     width: 100%;
-    overflow: hidden;
 }
 
 .parking_main {
     padding: 12px 20px 20px;
-    background: #fafafa;
-    border-radius: 10px;
+    background: linear-gradient(
+        90deg,
+        rgba(78, 132, 142, 0.8) 0%,
+        #8ac0ca 50.01%,
+        rgba(78, 132, 142, 0.8) 100%
+    );
+    position: relative;
+    &::before {
+        content: "";
+        position: absolute;
+        width: 6px;
+        background: #005469;
+        border-radius: 4px;
+        height: calc(100% + 16px);
+        top: -8px;
+        left: 0;
+    }
+    &::after {
+        content: "";
+        position: absolute;
+        width: 6px;
+        background: #005469;
+        border-radius: 4px;
+        height: calc(100% + 16px);
+        top: -8px;
+        right: 0;
+    }
 }
 
 .parking_head {
     letter-spacing: 0.2px;
     font-family: $fontFamily;
-    color: #bdbdbd;
+    color: #005469;
     font-size: 14px;
     line-height: 21px;
     margin-bottom: 12px;
@@ -216,7 +210,6 @@ body > div:not([class], [id]) {
 .parking_list {
     width: 100%;
     height: 160px;
-    border-radius: 6px;
     margin-top: 20px;
     &:first-child {
         margin-top: 0;
@@ -226,11 +219,30 @@ body > div:not([class], [id]) {
     flex-flow: row wrap;
     justify-content: flex-start;
     align-content: center;
-    box-shadow: 0px 2px 8px rgba(26, 26, 26, 0.08), 0px 2px 4px rgba(26, 26, 26, 0.03);
-    background-color: #fff;
     @include Transition();
+    background: #f6f8f5;
+    border: 0.8px solid rgba(8, 95, 118, 0.8);
+    border-radius: 2px;
+
     &.active {
         background-color: #e9f7f8;
+    }
+
+    position: relative;
+    &::after {
+        content: "";
+        background-image: url("./Image/icon_bg2.png");
+        background-size: cover;
+        background-position: left bottom;
+        background-repeat: no-repeat;
+        background-color: transparent;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
     }
 }
 
@@ -241,6 +253,8 @@ body > div:not([class], [id]) {
     align-items: center;
     justify-content: center;
     flex: 0 0 auto;
+    position: relative;
+    z-index: 2;
     &::before {
         content: "";
         width: calc(100% - 24px);
@@ -273,7 +287,7 @@ body > div:not([class], [id]) {
             font-weight: 500;
             font-size: 20px;
             line-height: 24px;
-            color: #757575;
+            opacity: 1;
         }
     }
 }
@@ -298,13 +312,14 @@ body > div:not([class], [id]) {
     font-weight: 400;
     font-size: 34px;
     line-height: 46px;
-    color: #ebebeb;
+    color: #005469;
     position: absolute;
     letter-spacing: 0.15px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     @include Transition();
+    opacity: 0.3;
 }
 
 /********** 下方 放置区域 end ******************/
@@ -314,13 +329,30 @@ body > div:not([class], [id]) {
     padding: 8px 18px 8px 22px;
     position: relative;
     cursor: pointer;
+
     display: inline-flex;
     margin-right: 4px;
     margin-bottom: 16px;
+    font-family: $fontFamily;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.2px;
+
+    color: #4d4d4d;
+    &.gray {
+        background-color: rgba(gray, 0.2);
+        * {
+            visibility: hidden;
+        }
+    }
 }
 
 .btn_small_top {
-    border-radius: 1px;
     border-width: 0.78px 0.78px 0 0.78px;
     border-style: solid;
     width: calc(100% - 10.3px - 5.91px);
@@ -328,9 +360,9 @@ body > div:not([class], [id]) {
     left: 10.3px;
     top: 0;
     position: absolute;
-    border-color: transparent;
-    border-image: linear-gradient(3.39deg, #79a3ab -1497.07%, #005469 91.33%);
-    clip-path: inset(0 round 10px);
+    box-sizing: border-box;
+    z-index: 0;
+    border-image: url("./Image/icon_innerTop.png") 134 160 0 161 stretch;
 }
 
 .btn_small_right {
@@ -339,10 +371,25 @@ body > div:not([class], [id]) {
     position: absolute;
     right: 5.91px;
     top: 2.45px;
-    background: linear-gradient(0deg, #79a3ab -48%, #005469 109.3%);
+    background-image: url("./Image/inner_right.png");
+    background-color: transparent;
+    background-position: top left;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    z-index: 1;
 }
 
 .btn_small_bottom {
+    border-width: 0 0.78px 0.78px 0.78px;
+    border-style: solid;
+    width: calc(100% - 10.3px - 5.91px);
+    height: 2.25px;
+    left: 10.3px;
+    bottom: 0;
+    position: absolute;
+    border-image: url("./Image/icon_innerBottom.png") 0 160 134 161 stretch;
+    box-sizing: border-box;
+    z-index: 0;
 }
 
 .btn_small_leftTop {
@@ -351,7 +398,12 @@ body > div:not([class], [id]) {
     position: absolute;
     left: 10.3px;
     top: 2.45px;
-    background: linear-gradient(0.11deg, #79a3ab -3191.66%, #005469 319.95%);
+    background-image: url("./Image/inner_leftTop.png");
+    background-color: transparent;
+    background-position: top left;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    z-index: 1;
 }
 
 .btn_small_leftBottom {
@@ -360,7 +412,12 @@ body > div:not([class], [id]) {
     position: absolute;
     left: 10.3px;
     bottom: 2.45px;
-    background: linear-gradient(0deg, #79a3ab -48%, #005469 109.3%);
+    background-image: url("./Image/inner_left.png");
+    background-color: transparent;
+    background-position: top left;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    z-index: 1;
 }
 
 .btn_cloud_left {
@@ -374,6 +431,7 @@ body > div:not([class], [id]) {
     background-color: transparent;
     background-repeat: no-repeat;
     background-position: top left;
+    z-index: 2;
 }
 
 .btn_cloud_right {
@@ -387,6 +445,130 @@ body > div:not([class], [id]) {
     background-color: transparent;
     background-repeat: no-repeat;
     background-position: top left;
+    z-index: 2;
+}
+
+.btn_out_top {
+    height: 0.2px;
+    width: calc(100% - 11.08px - 6.7px);
+    left: 11.08px;
+    top: 2.25px;
+    background-image: url("./Image/out_top.png");
+    background-size: 100% 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: top left;
+    position: absolute;
+}
+
+.btn_out_right {
+    position: absolute;
+    right: 4.25px;
+    top: 2.25px;
+    border-width: 0.2px 0.2px 0 0;
+    border-style: solid;
+    width: 1.67px;
+    height: calc(100% - 2.25px - 10.47px);
+    border-image: url("./Image/icon_outRight.png") 18 18 0 0 stretch;
+    box-sizing: border-box;
+    z-index: 3;
+}
+
+.btn_out_bottom {
+    width: calc(100% - 11.08px - 6.7px);
+    background-image: url("./Image/out_bottom.png");
+    background-size: 100% 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: top left;
+    height: 0.2px;
+    left: 11.08px;
+    bottom: 2.25px;
+    position: absolute;
+    z-index: 3;
+}
+
+.btn_out_left {
+    position: absolute;
+    left: 8.63px;
+    bottom: 2.25px;
+    border-width: 0 0 0.2px 0.2px;
+    border-style: solid;
+    width: 1.67px;
+    height: calc(100% - 14px - 2.25px);
+    border-image: url("./Image/icon_outLeftBottom.png") 0 0 6 6 stretch;
+    box-sizing: border-box;
+    z-index: 3;
+}
+
+.btn_out_leftTop {
+    position: absolute;
+    left: 8.63px;
+    top: 2.25px;
+    width: 1.67px;
+    height: 1.27px;
+    z-index: 3;
+    background-image: url("./Image/icon_outRightTop.png");
+    background-color: transparent;
+    background-size: 100% 100%;
+    background-position: top left;
+    background-repeat: no-repeat;
+}
+
+.btn_repeat_leftTop {
+    background-image: url("./Image/repeat_leftTop.png");
+    background-color: transparent;
+    background-size: 100% 100%;
+    background-position: top left;
+    background-repeat: no-repeat;
+    width: 0.78px;
+    height: 0.2px;
+    position: absolute;
+    z-index: 5;
+    top: 2.25px;
+    left: 10.3px;
+}
+
+.btn_repeat_rightTop {
+    width: 0.78px;
+    height: 0.2px;
+    position: absolute;
+    z-index: 5;
+    top: 2.25px;
+    right: 5.91px;
+    background-image: url("./Image/repeat_rightTop.png");
+    background-color: transparent;
+    background-size: 100% 100%;
+    background-position: top left;
+    background-repeat: no-repeat;
+}
+
+.btn_repeat_leftBottom {
+    width: 0.78px;
+    height: 0.2px;
+    position: absolute;
+    z-index: 5;
+    bottom: 2.25px;
+    left: 10.3px;
+    background-image: url("./Image/repeat_leftBottom.png");
+    background-color: transparent;
+    background-size: 100% 100%;
+    background-position: top left;
+    background-repeat: no-repeat;
+}
+
+.btn_repeat_rightBottom {
+    width: 0.78px;
+    height: 0.2px;
+    position: absolute;
+    z-index: 5;
+    right: 5.91px;
+    bottom: 2.25px;
+    background-image: url("./Image/repeat_rightBottom.png");
+    background-color: transparent;
+    background-size: 100% 100%;
+    background-position: top left;
+    background-repeat: no-repeat;
 }
 
 /*************** btn_wrap end *****************************/
