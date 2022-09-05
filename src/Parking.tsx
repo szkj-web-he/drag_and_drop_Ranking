@@ -4,6 +4,7 @@ import React from "react";
 import { comms } from ".";
 import { Drag } from "./Drag";
 import { DragBox } from "./DragBox";
+import ParkingBg from "./ParkingBg";
 import { ParkingProps, PublicTempProps } from "./unit";
 /* <------------------------------------ **** DEPENDENCE IMPORT END **** ------------------------------------ */
 /* <------------------------------------ **** INTERFACE START **** ------------------------------------ */
@@ -48,6 +49,7 @@ const Temp: React.FC<TempProps> = ({ list, activeId, handleDragMove, handleDragE
             <div className="parking_head">{comms.config.optionsInstruction}</div>
 
             <div className="parking_container">
+                <ParkingBg />
                 {arr.map((row, n) => {
                     const active = row.some((item) => item.id === activeId);
 
@@ -65,14 +67,13 @@ const Temp: React.FC<TempProps> = ({ list, activeId, handleDragMove, handleDragE
                                 let width: string;
                                 if (list.length > 6) {
                                     width = "calc(100% / 6)";
-
-                                    if (n < 5) {
+                                    if (index < 5) {
                                         classList.push("parking_item__border");
                                     }
                                 } else {
                                     width = `calc(100% / ${list.length})`;
 
-                                    if (n < list.length - 1) {
+                                    if (index < list.length - 1) {
                                         classList.push("parking_item__border");
                                     }
                                 }
@@ -96,7 +97,6 @@ const Temp: React.FC<TempProps> = ({ list, activeId, handleDragMove, handleDragE
                                                     content: item.value.content,
                                                 }}
                                                 activeClassName="gray"
-                                                className="parking_value"
                                                 handleDragMove={({ name }) => {
                                                     if (item.value) {
                                                         handleDragMove({
@@ -113,6 +113,7 @@ const Temp: React.FC<TempProps> = ({ list, activeId, handleDragMove, handleDragE
                                                 handleDragCancel={handleDragEnd}
                                             >
                                                 <span
+                                                    className="dragContent"
                                                     dangerouslySetInnerHTML={{
                                                         __html: item.value.content,
                                                     }}

@@ -45,6 +45,7 @@ options:
 
 # How many options you can ranking
 column: 8
+# column: 5
 
 # options instruction
 optionsInstruction: "您最喜欢的10种东西"

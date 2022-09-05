@@ -205,7 +205,11 @@ const Main: React.FC = () => {
                         handleDragMove={handleDragMove}
                         handleDragEnd={handleDragEnd}
                     />
-                    <div className="hr" />
+                    <div className="hr">
+                        <div className="hr_left" />
+                        <div className="hr_center" />
+                        <div className="hr_right" />
+                    </div>
 
                     <Parking
                         list={placementList}

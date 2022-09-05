@@ -43,6 +43,7 @@ export const Warehouse: React.FC<WarehouseProps> = ({ list, handleDragMove, hand
                         portalClassName="dragPortal"
                     >
                         <span
+                            className="dragContent"
                             dangerouslySetInnerHTML={{
                                 __html: item.content,
                             }}

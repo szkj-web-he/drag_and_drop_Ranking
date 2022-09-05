@@ -27,22 +27,12 @@ const Temp = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
         /* <------------------------------------ **** FUNCTION END **** ------------------------------------ */
         return (
             <div className={`btn_wrap${className ? ` ${className}` : ""}`} ref={ref} {...props}>
-                <div className="btn_small_top" />
-                <div className="btn_small_right" />
-                <div className="btn_small_bottom" />
-                <div className="btn_small_leftTop" />
-                <div className="btn_small_leftBottom" />
-                <div className="btn_cloud_left" />
-                <div className="btn_cloud_right" />
-                <div className="btn_out_top" />
-                <div className="btn_out_right" />
-                <div className="btn_out_left" />
-                <div className="btn_out_bottom" />
-                <div className="btn_out_leftTop" />
-                <div className="btn_repeat_leftTop" />
-                <div className="btn_repeat_rightTop" />
-                <div className="btn_repeat_leftBottom" />
-                <div className="btn_repeat_rightBottom" />
+                <div className="btn_bgBorder" />
+                <div className="btn_bg">
+                    <div className="btn_bgTop" />
+                    <div className="btn_bgBottom" />
+                </div>
+
                 {children}
             </div>
         );

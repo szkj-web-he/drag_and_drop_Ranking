@@ -27,8 +27,8 @@ body > div:not([class], [id]) {
     justify-content: flex-start;
     flex-flow: column nowrap;
     background-image: url("./Image/bg.png");
-    background-size: 100% auto;
-    background-position: 0 90%;
+    background-size: cover;
+    background-position: center center;
     box-sizing: border-box;
     background-repeat: no-repeat;
 }
@@ -49,38 +49,40 @@ body > div:not([class], [id]) {
 }
 
 .questionContent {
-    color: #005469;
-    font-family: $fontFamily;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 30px;
-    letter-spacing: 0.2px;
-}
-
-.questionDes {
-    color: rgba(#005469, 0.5);
+    color: #212121;
     font-family: $fontFamily;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
     line-height: 30px;
     letter-spacing: 0.2px;
+    border-bottom: 1px solid #000000;
+}
+
+.questionDes {
+    color: #4d4d4d;
+    font-family: $fontFamily;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: 0.2px;
+    border-bottom: 1px solid #000000;
 }
 
 @mixin Total {
     font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 14px;
-    line-height: 21px;
+    line-height: 20px;
     font-family: $fontFamily;
     letter-spacing: 0.2px;
-    color: #bdbdbd;
+    color: #212121;
 }
 
 /****** 上方原始数据部分 start *********/
 .warehouse_wrap {
-    margin-bottom: 24px;
+    margin-bottom: 32px;
     flex: 0 0 auto;
 }
 
@@ -89,7 +91,7 @@ body > div:not([class], [id]) {
 }
 
 .warehouse_totalVal {
-    color: #35b5c7;
+    color: #0ad7e4;
     margin: 0 5px;
 
     &.red {
@@ -107,7 +109,6 @@ body > div:not([class], [id]) {
     max-height: 178px;
     position: relative;
     display: flex;
-    padding-bottom: 24px;
     align-items: center;
     justify-content: flex-start;
     align-content: flex-start;
@@ -123,7 +124,7 @@ body > div:not([class], [id]) {
 }
 
 .warehouse_body {
-    width: calc(100% + 4px);
+    width: calc(100% + 16px);
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -131,35 +132,59 @@ body > div:not([class], [id]) {
     align-content: flex-start;
 }
 /****** 上方原始数据部分 end *********/
+.dragContent {
+    position: relative;
+    z-index: 3;
+}
 
 .dragPortalContainer {
     z-index: 50;
     position: absolute !important;
     pointer-events: none;
     box-sizing: border-box;
-    background-color: #fff;
 }
 
 .hr {
     width: 100%;
-    margin-bottom: 40px;
-    height: 19px;
-    background-image: url("./Image/hr.png");
-    background-position: bottom right;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-size: auto 100%;
+    margin-bottom: 24px;
+    height: 20px;
+    display: flex;
     position: relative;
-    box-sizing: border-box;
-    &::after {
-        content: "";
-        width: calc(100% - 238.16px);
-        height: 0.73px;
-        background-color: #005469;
-        left: 0;
-        bottom: 0;
-        position: absolute;
-    }
+}
+
+.hr_left {
+    background-image: url("./Image/icon_hrLeft.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: top left;
+    background-color: transparent;
+    position: absolute;
+    left: 0;
+    bottom: 1;
+    width: 83px;
+    height: 19px;
+}
+
+.hr_center {
+    background-color: #00d9ff;
+    width: calc(100% - 65px - 39px);
+    height: 1px;
+    position: absolute;
+    left: 65px;
+    top: 15px;
+}
+
+.hr_right {
+    background-image: url("./Image/icon_hrRight.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: top left;
+    background-color: transparent;
+    position: absolute;
+    right: 0;
+    top: 5px;
+    width: 40px;
+    height: 11px;
 }
 
 /********** 下方 放置区域 start ******************/
@@ -167,44 +192,15 @@ body > div:not([class], [id]) {
     width: 100%;
 }
 
-.parking_main {
-    padding: 12px 20px 20px;
-    background: linear-gradient(
-        90deg,
-        rgba(78, 132, 142, 0.8) 0%,
-        #8ac0ca 50.01%,
-        rgba(78, 132, 142, 0.8) 100%
-    );
-    position: relative;
-    &::before {
-        content: "";
-        position: absolute;
-        width: 6px;
-        background: #005469;
-        border-radius: 4px;
-        height: calc(100% + 16px);
-        top: -8px;
-        left: 0;
-    }
-    &::after {
-        content: "";
-        position: absolute;
-        width: 6px;
-        background: #005469;
-        border-radius: 4px;
-        height: calc(100% + 16px);
-        top: -8px;
-        right: 0;
-    }
-}
-
 .parking_head {
     letter-spacing: 0.2px;
     font-family: $fontFamily;
     color: #005469;
     font-size: 14px;
+    font-weight: 500;
     line-height: 21px;
     margin-bottom: 12px;
+    letter-spacing: 0.2px;
 }
 
 .parking_list {
@@ -220,30 +216,21 @@ body > div:not([class], [id]) {
     justify-content: flex-start;
     align-content: center;
     @include Transition();
-    background: #f6f8f5;
-    border: 0.8px solid rgba(8, 95, 118, 0.8);
-    border-radius: 2px;
-
-    &.active {
-        background-color: #e9f7f8;
-    }
 
     position: relative;
-    &::after {
-        content: "";
-        background-image: url("./Image/icon_bg2.png");
-        background-size: cover;
-        background-position: left bottom;
-        background-repeat: no-repeat;
-        background-color: transparent;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 0;
-    }
+}
+
+.parking_container {
+    position: relative;
+    padding-top: 40px;
+    padding-bottom: 59px;
+}
+
+.parkingBg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
 }
 
 .parking_item {
@@ -300,9 +287,9 @@ body > div:not([class], [id]) {
         bottom: 0;
         margin: auto 0;
         right: 0;
-        height: 80px;
+        height: 100px;
         width: 1px;
-        background-color: #ebebeb;
+        background-color: rgba(#00bdff, 0.3);
     }
 }
 
@@ -312,38 +299,37 @@ body > div:not([class], [id]) {
     font-weight: 400;
     font-size: 34px;
     line-height: 46px;
-    color: #005469;
+    color: #0ad7e4;
     position: absolute;
     letter-spacing: 0.15px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     @include Transition();
-    opacity: 0.3;
 }
 
 /********** 下方 放置区域 end ******************/
 
 /*************** btn_wrap start *****************************/
 .btn_wrap {
-    padding: 8px 18px 8px 22px;
+    padding: 10px 14px 11px 14px;
     position: relative;
     cursor: pointer;
 
     display: inline-flex;
-    margin-right: 4px;
-    margin-bottom: 16px;
+    margin-right: 16px;
+    margin-bottom: 20px;
     font-family: $fontFamily;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    line-height: 21px;
+    line-height: 20px;
 
     align-items: center;
     text-align: center;
     letter-spacing: 0.2px;
 
-    color: #4d4d4d;
+    color: #20493f;
     &.gray {
         background-color: rgba(gray, 0.2);
         * {
@@ -352,223 +338,76 @@ body > div:not([class], [id]) {
     }
 }
 
-.btn_small_top {
-    border-width: 0.78px 0.78px 0 0.78px;
-    border-style: solid;
-    width: calc(100% - 10.3px - 5.91px);
-    height: 2.25px;
-    left: 10.3px;
+.btn_bgBorder {
+    border: 6px solid transparent;
+    border-image: url("./Image/btn_border.png") 55;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
     top: 0;
-    position: absolute;
-    box-sizing: border-box;
-    z-index: 0;
-    border-image: url("./Image/icon_innerTop.png") 134 160 0 161 stretch;
-}
-
-.btn_small_right {
-    width: 0.78px;
-    height: calc(100% - 2.45px - 10.47px);
-    position: absolute;
-    right: 5.91px;
-    top: 2.45px;
-    background-image: url("./Image/inner_right.png");
-    background-color: transparent;
-    background-position: top left;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    z-index: 1;
-}
-
-.btn_small_bottom {
-    border-width: 0 0.78px 0.78px 0.78px;
-    border-style: solid;
-    width: calc(100% - 10.3px - 5.91px);
-    height: 2.25px;
-    left: 10.3px;
-    bottom: 0;
-    position: absolute;
-    border-image: url("./Image/icon_innerBottom.png") 0 160 134 161 stretch;
-    box-sizing: border-box;
-    z-index: 0;
-}
-
-.btn_small_leftTop {
-    width: 0.78px;
-    height: 1.08px;
-    position: absolute;
-    left: 10.3px;
-    top: 2.45px;
-    background-image: url("./Image/inner_leftTop.png");
-    background-color: transparent;
-    background-position: top left;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    z-index: 1;
-}
-
-.btn_small_leftBottom {
-    width: 0.78px;
-    height: calc(100% - 14px - 2.45px);
-    position: absolute;
-    left: 10.3px;
-    bottom: 2.45px;
-    background-image: url("./Image/inner_left.png");
-    background-color: transparent;
-    background-position: top left;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    z-index: 1;
-}
-
-.btn_cloud_left {
-    width: 25.3px;
-    height: 8.6px;
-    position: absolute;
-    top: 4.4px;
     left: 0;
-    background-image: url("./Image/icon_cloudLeft.png");
-    background-size: 100% 100%;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-position: top left;
-    z-index: 2;
+    box-sizing: border-box;
 }
 
-.btn_cloud_right {
-    width: 28.57px;
-    height: 7.5px;
+.btn_bg {
     position: absolute;
-    bottom: 3.52px;
+    top: 0;
     right: 0;
-    background-image: url("./Image/icon_cloudRight.png");
-    background-size: 100% 100%;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+    width: calc(100% - 6px);
+    height: calc(100% - 6px);
+
+    overflow: hidden;
+    z-index: 2;
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        z-index: 0;
+    }
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #67d6ef;
+        box-shadow: inset 0px 4px 8px 8px rgba(255, 255, 255, 0.6);
+        filter: blur(8px);
+        z-index: 1;
+    }
+}
+
+@mixin BtnBg {
+    width: 100%;
+    height: 7px;
     background-color: transparent;
-    background-repeat: no-repeat;
-    background-position: top left;
+    background-image: url("./Image/btn_bg.png");
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+    background-position: left top;
+    position: absolute;
+    left: 0;
+    transform: skewX(30deg);
     z-index: 2;
 }
 
-.btn_out_top {
-    height: 0.2px;
-    width: calc(100% - 11.08px - 6.7px);
-    left: 11.08px;
-    top: 2.25px;
-    background-image: url("./Image/out_top.png");
-    background-size: 100% 100%;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-position: top left;
-    position: absolute;
+.btn_bgTop {
+    @include BtnBg();
+    top: 0;
 }
 
-.btn_out_right {
-    position: absolute;
-    right: 4.25px;
-    top: 2.25px;
-    border-width: 0.2px 0.2px 0 0;
-    border-style: solid;
-    width: 1.67px;
-    height: calc(100% - 2.25px - 10.47px);
-    border-image: url("./Image/icon_outRight.png") 18 18 0 0 stretch;
-    box-sizing: border-box;
-    z-index: 3;
-}
-
-.btn_out_bottom {
-    width: calc(100% - 11.08px - 6.7px);
-    background-image: url("./Image/out_bottom.png");
-    background-size: 100% 100%;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-position: top left;
-    height: 0.2px;
-    left: 11.08px;
-    bottom: 2.25px;
-    position: absolute;
-    z-index: 3;
-}
-
-.btn_out_left {
-    position: absolute;
-    left: 8.63px;
-    bottom: 2.25px;
-    border-width: 0 0 0.2px 0.2px;
-    border-style: solid;
-    width: 1.67px;
-    height: calc(100% - 14px - 2.25px);
-    border-image: url("./Image/icon_outLeftBottom.png") 0 0 6 6 stretch;
-    box-sizing: border-box;
-    z-index: 3;
-}
-
-.btn_out_leftTop {
-    position: absolute;
-    left: 8.63px;
-    top: 2.25px;
-    width: 1.67px;
-    height: 1.27px;
-    z-index: 3;
-    background-image: url("./Image/icon_outRightTop.png");
-    background-color: transparent;
-    background-size: 100% 100%;
-    background-position: top left;
-    background-repeat: no-repeat;
-}
-
-.btn_repeat_leftTop {
-    background-image: url("./Image/repeat_leftTop.png");
-    background-color: transparent;
-    background-size: 100% 100%;
-    background-position: top left;
-    background-repeat: no-repeat;
-    width: 0.78px;
-    height: 0.2px;
-    position: absolute;
-    z-index: 5;
-    top: 2.25px;
-    left: 10.3px;
-}
-
-.btn_repeat_rightTop {
-    width: 0.78px;
-    height: 0.2px;
-    position: absolute;
-    z-index: 5;
-    top: 2.25px;
-    right: 5.91px;
-    background-image: url("./Image/repeat_rightTop.png");
-    background-color: transparent;
-    background-size: 100% 100%;
-    background-position: top left;
-    background-repeat: no-repeat;
-}
-
-.btn_repeat_leftBottom {
-    width: 0.78px;
-    height: 0.2px;
-    position: absolute;
-    z-index: 5;
-    bottom: 2.25px;
-    left: 10.3px;
-    background-image: url("./Image/repeat_leftBottom.png");
-    background-color: transparent;
-    background-size: 100% 100%;
-    background-position: top left;
-    background-repeat: no-repeat;
-}
-
-.btn_repeat_rightBottom {
-    width: 0.78px;
-    height: 0.2px;
-    position: absolute;
-    z-index: 5;
-    right: 5.91px;
-    bottom: 2.25px;
-    background-image: url("./Image/repeat_rightBottom.png");
-    background-color: transparent;
-    background-size: 100% 100%;
-    background-position: top left;
-    background-repeat: no-repeat;
+.btn_bgBottom {
+    @include BtnBg();
+    bottom: 0;
 }
 
 /*************** btn_wrap end *****************************/
