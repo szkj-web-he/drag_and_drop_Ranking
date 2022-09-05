@@ -271,7 +271,6 @@ body > div:not([class], [id]) {
             top: 16px;
             left: 16px;
             transform: translate(0, 0);
-            font-weight: 500;
             font-size: 20px;
             line-height: 24px;
             opacity: 1;
@@ -296,7 +295,7 @@ body > div:not([class], [id]) {
 .parking_placeholder {
     font-family: $fontFamily;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     font-size: 34px;
     line-height: 46px;
     color: #0ad7e4;
