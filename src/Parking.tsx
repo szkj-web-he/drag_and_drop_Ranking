@@ -4,6 +4,9 @@ import React from "react";
 import { comms } from ".";
 import { Drag } from "./Drag";
 import { DragBox } from "./DragBox";
+import headBg from "./Image/icon_containerTop.png";
+import headLeft from "./Image/icon_containerTopLeft.png";
+import headRight from "./Image/icon_containerTopRight.png";
 import ParkingBg from "./ParkingBg";
 import { ParkingProps, PublicTempProps } from "./unit";
 /* <------------------------------------ **** DEPENDENCE IMPORT END **** ------------------------------------ */
@@ -46,10 +49,9 @@ const Temp: React.FC<TempProps> = ({ list, activeId, handleDragMove, handleDragE
 
     const content = (
         <div className="parking_main">
-            <div className="parking_head">{comms.config.optionsInstruction}</div>
+            <ParkingBg />
 
             <div className="parking_container">
-                <ParkingBg />
                 {arr.map((row, n) => {
                     const active = row.some((item) => item.id === activeId);
 
@@ -131,7 +133,21 @@ const Temp: React.FC<TempProps> = ({ list, activeId, handleDragMove, handleDragE
     );
 
     /* <------------------------------------ **** FUNCTION END **** ------------------------------------ */
-    return <div className="parking_wrap">{content}</div>;
+    return (
+        <div className="parking_wrap">
+            <div className="parking_head">
+                <div className="parking_headBgContainer">
+                    <img src={headBg} alt="" className="parking_headBg" />
+                    <img src={headLeft} alt="" className="parking_headLeft" />
+                    <img src={headRight} alt="" className="parking_headRight" />
+                </div>
+                <div className="headContent">
+                    <div className="headContent_value">{comms.config.optionsInstruction}</div>
+                </div>
+            </div>
+            {content}
+        </div>
+    );
 };
 /* <------------------------------------ **** FUNCTION COMPONENT END **** ------------------------------------ */
 export default Temp;
