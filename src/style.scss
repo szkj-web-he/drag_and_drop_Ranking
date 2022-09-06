@@ -328,6 +328,9 @@ body > div:not([class], [id]) {
 
 .optionItem {
     position: relative;
+    .btn_wrap {
+        margin: 0;
+    }
 }
 
 .optionItem_img {
