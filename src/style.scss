@@ -435,7 +435,9 @@ body > div:not([class], [id]) {
         background-size: 100% 100%;
         background-position: center;
         background-color: transparent;
-        width: calc(100% - 24px);
+        width: calc(100% - 22px);
+        left: 11px;
+        top: 0;
         height: 100%;
     }
     &::after {
