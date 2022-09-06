@@ -83,8 +83,11 @@ const Temp: React.FC = () => {
         };
         fn();
         window.addEventListener("resize", fn);
+
+        document.fonts.addEventListener("loading", fn);
         return () => {
             window.removeEventListener("resize", fn);
+            document.fonts.removeEventListener("loading", fn);
         };
     }, []);
 
