@@ -136,12 +136,6 @@ body > div:not([class], [id]) {
 .dragContent {
     position: relative;
     z-index: 3;
-
-    background-image: url("./Image/btn_center.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-position: top left;
-    background-color: transparent;
 }
 
 .dragPortalContainer {
@@ -173,10 +167,12 @@ body > div:not([class], [id]) {
     box-shadow: 0px 18px 18px 0px rgba(192, 162, 120, 0.48);
     border-radius: 6px;
     position: relative;
-    top: -1%;
+    top: -30px;
     width: calc(100% - 4%);
     margin: 0 auto;
     z-index: 0;
+    overflow: hidden;
+    padding: 7px;
 }
 
 .parking_head {
@@ -189,31 +185,28 @@ body > div:not([class], [id]) {
 }
 
 .parking_headBg {
+    height: 43px;
     width: 100%;
 }
 
 .parking_headLeft {
     position: absolute;
     object-fit: cover;
-    object-position: top left;
-    height: 70%;
-    left: -6px;
-    top: -3px;
+    object-position: center;
+    width: 49px;
+    height: 31px;
+    top: -2%;
+    left: 0;
 }
 
 .parking_headRight {
     position: absolute;
     object-fit: cover;
-    object-position: top left;
-    height: 70%;
-    right: -6px;
-    top: -6px;
-}
-
-.parking_headContent {
-    width: 100%;
-    object-fit: cover;
-    object-position: top left;
+    object-position: center;
+    width: 49px;
+    height: 31px;
+    top: -2%;
+    right: 0;
 }
 
 .headContent {
@@ -246,8 +239,6 @@ body > div:not([class], [id]) {
 
 .parking_list {
     width: 100%;
-    height: 160px;
-    margin-top: 20px;
     &:first-child {
         margin-top: 0;
     }
@@ -263,42 +254,42 @@ body > div:not([class], [id]) {
 
 .parking_container {
     position: relative;
-    padding-top: 40px;
-    padding-bottom: 59px;
-}
-
-.parkingBg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;
+    padding: 3% 0.5% 1% 0.5%;
+    box-sizing: border-box;
+    &::before {
+        content: "";
+        border-image: url("./Image/bg_box.png") 73 873 178 148;
+        border-width: 13.7px 163.85px 33.4px 22.77px;
+        border-style: solid;
+        border-color: transparent;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+    &::after {
+        content: "";
+        width: calc(100% - 163.85px - 22.77px + 2px);
+        height: calc(100% - 13.7px - 33.4px + 2px);
+        background-color: #ceb38c;
+        left: 21.77px;
+        top: 12.7px;
+        position: absolute;
+        z-index: 0;
+    }
 }
 
 .parking_item {
     height: 100%;
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     flex: 0 0 auto;
-    position: relative;
     z-index: 2;
-    &::before {
-        content: "";
-        width: calc(100% - 24px);
-        height: calc(100% - 24px);
-        position: absolute;
-        left: 12px;
-        top: 12px;
-        box-sizing: border-box;
-        border-radius: 6px;
-        pointer-events: none;
-        border: 1px dashed transparent;
-        @include Transition();
-    }
+
     &.parking_item__active {
-        &::before {
-            border-color: #22a6b3;
+        .optionItem_content {
+            background-color: #0ad7e4;
         }
     }
 
@@ -319,75 +310,86 @@ body > div:not([class], [id]) {
     }
 }
 
-.parking_item__border {
-    &::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        margin: auto 0;
-        right: 0;
-        height: 100px;
-        width: 1px;
-        background-color: rgba(#00bdff, 0.3);
-    }
-}
-
 .parking_placeholder {
     font-family: $fontFamily;
     font-style: normal;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 34px;
     line-height: 46px;
-    color: #0ad7e4;
+    color: #d79151;
     position: absolute;
     letter-spacing: 0.15px;
+    opacity: 0.3;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     @include Transition();
 }
 
-.parkingBg_wrap {
-    position: absolute;
-    top: 7px;
-    left: 7px;
-    width: calc(100% - 14px);
-    height: calc(100% - 14px);
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-flow: row nowrap;
+.optionItem {
+    position: relative;
 }
 
-.parkingBg_left {
-    display: flex;
-    align-items: flex-start;
-    flex-flow: column nowrap;
-    justify-content: flex-start;
-    height: 100%;
-}
-
-.parkingBg_leftTop {
-    height: 30%;
-    flex: 0 0 auto;
-    object-fit: cover;
-    object-position: top left;
-    width: auto;
-}
-
-.parkingBg_leftCenter {
-    flex: 1 1 auto;
-    background-color: #ceb38c;
-    width: 100%;
-}
-
-.parkingBg_leftBottom {
-    flex: 0 0 auto;
-    object-fit: cover;
-    object-position: top left;
+.optionItem_img {
     width: 100%;
     height: auto;
+}
+
+.optionItem_content {
+    position: absolute;
+    top: 6%;
+    left: 6%;
+    width: calc(100% - 12%);
+    height: calc(100% - 6% - 11%);
+    background-color: #f8f1df;
+    box-shadow: 0px -3px 6px 0px rgba(67, 6, 7, 0.17), 0px 7px 13px 0px rgba(67, 6, 7, 0.43);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include Transition();
+}
+
+.optionItem_topImage {
+    position: absolute;
+    top: 4%;
+    transform: translateY(-100%);
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+
+    width: 4.3px;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+}
+
+.optionItem_joinImg {
+    object-fit: cover;
+    object-position: center;
+    margin: 0 auto;
+    position: absolute;
+    top: 3%;
+    transform: translate(0, -100%);
+    height: 11%;
+    left: 0;
+    right: 0;
+    display: inline-block;
+    width: 4.3px;
+}
+
+.optionItem_lastImg {
+    object-fit: cover;
+    object-position: center;
+    margin: 0 auto;
+    position: absolute;
+
+    width: 15%;
+    bottom: 7%;
+    transform: translate(-46%, 100%);
+    left: 0;
+    right: 0;
+    display: inline-block;
 }
 
 /********** 下方 放置区域 end ******************/
@@ -415,6 +417,23 @@ body > div:not([class], [id]) {
         * {
             visibility: hidden;
         }
+        &::after {
+            visibility: hidden;
+        }
+        &::before {
+            visibility: hidden;
+        }
+    }
+    &::before {
+        content: "";
+        position: absolute;
+        background-image: url("./Image/btn_center.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: center;
+        background-color: transparent;
+        width: calc(100% - 24px);
+        height: 100%;
     }
     &::after {
         content: "";

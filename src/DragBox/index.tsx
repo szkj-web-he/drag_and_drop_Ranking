@@ -8,6 +8,10 @@
 /** This section will include all the necessary dependence for this tsx file */
 import React, { forwardRef, useLayoutEffect, useRef } from "react";
 import { useDragContext } from "../dragContext";
+import bg from "../Image/icon_boxBg.png";
+import topIcon from "../Image/icon_row1.png";
+import lastIcon from "../Image/icon_lastRow.png";
+import joinIcon from "../Image/icon_noRow1.png";
 /* <------------------------------------ **** DEPENDENCE IMPORT END **** ------------------------------------ */
 /* <------------------------------------ **** INTERFACE START **** ------------------------------------ */
 /** This section will include all the interface for this tsx file */
@@ -20,11 +24,25 @@ export interface DragBoxProps extends React.HTMLAttributes<HTMLDivElement> {
      *
      */
     children?: React.ReactNode;
+
+    /**
+     * 下标
+     */
+    index: number;
+
+    /**
+     * 总量
+     */
+    total: number;
+    /**
+     * 有几列
+     */
+    colNumber: number;
 }
 /* <------------------------------------ **** INTERFACE END **** ------------------------------------ */
 /* <------------------------------------ **** FUNCTION COMPONENT START **** ------------------------------------ */
 export const DragBox = forwardRef<HTMLDivElement, DragBoxProps>(
-    ({ id, children, ...props }, ref) => {
+    ({ id, children, className, index, total, colNumber, ...props }, ref) => {
         DragBox.displayName = "DragBox";
         /* <------------------------------------ **** STATE START **** ------------------------------------ */
         /************* This section will include this component HOOK function *************/
@@ -55,9 +73,26 @@ export const DragBox = forwardRef<HTMLDivElement, DragBoxProps>(
                         (ref as React.MutableRefObject<HTMLElement | null>).current = el;
                     }
                 }}
+                className={`optionItem${className ? ` ${className}` : ""}`}
                 {...props}
             >
-                {children}
+                {index < colNumber ? (
+                    <img src={topIcon} alt="" className="optionItem_topImage" />
+                ) : (
+                    <></>
+                )}
+                <img src={bg} alt="" className="optionItem_img" />
+                <div className="optionItem_content">{children}</div>
+                {index - colNumber >= 0 ? (
+                    <img src={joinIcon} alt="" className="optionItem_joinImg" />
+                ) : (
+                    <></>
+                )}
+                {index + colNumber >= total ? (
+                    <img src={lastIcon} alt="" className="optionItem_lastImg" />
+                ) : (
+                    <></>
+                )}
             </div>
         );
     },
