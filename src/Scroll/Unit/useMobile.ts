@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { isMobile } from "../../isMobile";
+
+const isMobile = (): boolean => {
+    return window.matchMedia("(any-pointer:coarse)").matches;
+};
 
 export const useMobile = (): boolean => {
     const [state, setState] = useState(isMobile());

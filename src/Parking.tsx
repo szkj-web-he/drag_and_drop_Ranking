@@ -40,6 +40,7 @@ const Temp: React.FC<TempProps> = ({ list, activeId, handleDragMove, handleDragE
         } else {
             arr = [list];
         }
+        console.log(arr);
         return arr;
     }, [colNumber, list]);
     /* <------------------------------------ **** STATE END **** ------------------------------------ */
@@ -91,18 +92,15 @@ const Temp: React.FC<TempProps> = ({ list, activeId, handleDragMove, handleDragE
                                 }
 
                                 let width: string;
+
+                                if (index < colNumber) {
+                                    classList.push("parking_item__border");
+                                }
+
                                 if (list.length > colNumber) {
                                     width = `calc(100% / ${colNumber})`;
-
-                                    if (n < colNumber - 1) {
-                                        classList.push("parking_item__border");
-                                    }
                                 } else {
                                     width = `calc(100% / ${list.length})`;
-
-                                    if (n < list.length - 1) {
-                                        classList.push("parking_item__border");
-                                    }
                                 }
 
                                 return (
@@ -119,10 +117,6 @@ const Temp: React.FC<TempProps> = ({ list, activeId, handleDragMove, handleDragE
                                         </div>
                                         {item.value && (
                                             <Drag
-                                                value={{
-                                                    code: item.value.code,
-                                                    content: item.value.content,
-                                                }}
                                                 activeClassName="gray"
                                                 className="parking_value"
                                                 handleDragMove={({ name }) => {

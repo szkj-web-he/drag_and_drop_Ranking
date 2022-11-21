@@ -27,10 +27,6 @@ export const Warehouse: React.FC<WarehouseProps> = ({ list, handleDragMove, hand
                 return (
                     <Drag
                         key={item.code}
-                        value={{
-                            code: item.code,
-                            content: item.content,
-                        }}
                         activeClassName="gray"
                         handleDragMove={({ name }) => {
                             handleDragMove({

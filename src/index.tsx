@@ -9,6 +9,7 @@ import { BoxItem, DragContext } from "./dragContext";
 import Parking from "./Parking";
 import { ScrollComponent } from "./Scroll";
 import { Warehouse } from "./warehouse";
+import Header from "./header";
 
 export const comms = new PluginComms({
     defaultConfig: new ConfigYML(),
@@ -185,20 +186,7 @@ const Main: React.FC = () => {
                 }}
                 bodyClassName="wrapperBody"
             >
-                <div className="question">
-                    <div
-                        className="questionContent"
-                        dangerouslySetInnerHTML={{
-                            __html: comms.config.question ?? "",
-                        }}
-                    />
-                    <div
-                        className="questionDes"
-                        dangerouslySetInnerHTML={{
-                            __html: `(${comms.config.instruction ?? ""})`,
-                        }}
-                    />
-                </div>
+                <Header />
                 <DragContext.Provider value={{ boxes: boxesRef.current }}>
                     <Warehouse
                         list={list}
