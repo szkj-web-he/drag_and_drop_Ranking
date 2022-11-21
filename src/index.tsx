@@ -9,6 +9,7 @@ import { BoxItem, DragContext } from "./dragContext";
 import Parking from "./Parking";
 import { ScrollComponent } from "./Scroll";
 import { Warehouse } from "./warehouse";
+import Header from "./header";
 
 export const comms = new PluginComms({
     defaultConfig: new ConfigYML(),
@@ -62,15 +63,15 @@ const Main: React.FC = () => {
         //一维开放
         const options = comms.config.options ?? [];
 
-        const data: Record<string, string> = {};
+        const data: Record<string, number | null> = {};
         for (let i = 0; i < options.length; i++) {
             const item = options[i];
 
-            let value = "";
+            let value: number | null = null;
             for (let j = 0; j < placementList.length; ) {
                 const _item = placementList[j];
                 if (_item.value?.code === item.code) {
-                    value = String(j + 1);
+                    value = j + 1;
                     j = placementList.length;
                 } else {
                     ++j;
@@ -78,6 +79,7 @@ const Main: React.FC = () => {
             }
             data[item.code] = value;
         }
+        console.log(JSON.stringify(data));
         comms.state = data;
     }, [placementList]);
 
@@ -186,20 +188,7 @@ const Main: React.FC = () => {
                 bodyClassName="wrapperBody"
                 className="wrapperScroll"
             >
-                <div className="question">
-                    <div
-                        className="questionContent"
-                        dangerouslySetInnerHTML={{
-                            __html: comms.config.question ?? "",
-                        }}
-                    />
-                    <div
-                        className="questionDes"
-                        dangerouslySetInnerHTML={{
-                            __html: `(${comms.config.instruction ?? ""})`,
-                        }}
-                    />
-                </div>
+                <Header />
                 <DragContext.Provider value={{ boxes: boxesRef.current }}>
                     <Warehouse
                         list={list}
