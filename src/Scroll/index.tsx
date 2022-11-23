@@ -7,7 +7,7 @@
 /* <------------------------------------ **** DEPENDENCE IMPORT START **** ------------------------------------ */
 /** This section will include all the necessary dependence for this tsx file */
 import React, { forwardRef, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { getScrollValue } from "../unit";
+import { getScrollValue } from "../getScrollValue";
 import "./style.scss";
 import DragBar from "./Unit/dragBar";
 import { setScrollBar } from "./Unit/setScrollBar";

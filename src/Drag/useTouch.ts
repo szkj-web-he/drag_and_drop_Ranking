@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useRef } from "react";
 import { useMobile } from "../Scroll/Unit/useMobile";
+import { autoScroll, AutoScrollProps } from "../unit";
 
 interface PointProp {
     pageX: number;
@@ -57,10 +58,15 @@ export const useTouch = (
             passive: false,
             capture: true,
         };
-        let timer: number | null = null;
+        const scrollData: AutoScrollProps = {
+            direction: 0,
+            timer: null,
+        };
 
         const removeHandle = () => {
-            timer && window.clearTimeout(timer);
+            scrollData.timer && window.clearTimeout(scrollData.timer);
+            scrollData.timer = null;
+            scrollData.direction = 0;
             document.removeEventListener("touchmove", handleTouchMove, options);
             document.removeEventListener("touchend", handleTouchEnd, options);
             document.removeEventListener("touchcancel", handleTouchCancel, options);
@@ -74,9 +80,11 @@ export const useTouch = (
          * touchmove
          */
         const handleTouchMove = (e: TouchEvent) => {
+            if (!e.cancelable) {
+                return;
+            }
             e.preventDefault();
             e.stopImmediatePropagation();
-            timer && window.clearTimeout(timer);
 
             const { pageX, pageY, clientX, clientY } = e.changedTouches[0];
 
@@ -87,31 +95,7 @@ export const useTouch = (
                 clientY,
             });
             //这里自动向下滚动
-            const autoScroll = (delay: number) => {
-                const el = document.getElementsByClassName("wrapperBody")[0];
-                if (
-                    el instanceof HTMLElement &&
-                    clientY > window.innerHeight - 20 &&
-                    el.scrollHeight > el.scrollTop + el.offsetHeight
-                ) {
-                    timer = window.setTimeout(() => {
-                        timer = null;
-                        if (el.scrollHeight > el.scrollTop + el.offsetHeight) {
-                            el.scrollTop = el.scrollTop + 1;
-                            autoScroll(0);
-                        }
-                    }, delay);
-                } else if (el instanceof HTMLElement && clientY < 20) {
-                    timer = window.setTimeout(() => {
-                        timer = null;
-                        if (el.scrollTop > 0) {
-                            el.scrollTop = el.scrollTop - 1;
-                            autoScroll(0);
-                        }
-                    }, delay);
-                }
-            };
-            autoScroll(1000);
+            autoScroll(clientY, scrollData);
         };
 
         /**
@@ -146,6 +130,10 @@ export const useTouch = (
             e.preventDefault();
             e.stopImmediatePropagation();
 
+            scrollData.timer && window.clearTimeout(scrollData.timer);
+            scrollData.direction = 0;
+            scrollData.timer = null;
+
             startFn.current({
                 pageX: e.changedTouches[0].pageX,
                 pageY: e.changedTouches[0].pageY,
@@ -166,7 +154,7 @@ export const useTouch = (
             };
         }
         return () => {
-            timer && window.clearTimeout(timer);
+            scrollData.timer && window.clearTimeout(scrollData.timer);
         };
     }, [mobileStatus]);
 
@@ -176,12 +164,19 @@ export const useTouch = (
     useLayoutEffect(() => {
         const node = ref.current;
 
+        const scrollData: AutoScrollProps = {
+            direction: 0,
+            timer: null,
+        };
         const removeHandle = () => {
+            scrollData.timer && window.clearTimeout(scrollData.timer);
+            scrollData.timer = null;
             document.removeEventListener("mousemove", handleMouseMove, true);
             document.removeEventListener("mouseup", handleMouseUp, true);
             window.removeEventListener("blur", handleMouseCancel, true);
             document.onselectstart = selectedFn.current;
             selectedFn.current = null;
+            scrollData.direction = 0;
         };
 
         const removeSelect = (e: MouseEvent) => {
@@ -192,12 +187,17 @@ export const useTouch = (
         };
 
         const handleMouseMove = (e: MouseEvent) => {
+            const { pageX, pageY, clientX, clientY } = e;
+
             moveFn.current({
-                pageX: e.pageX,
-                pageY: e.pageY,
-                clientX: e.clientX,
-                clientY: e.clientY,
+                pageX,
+                pageY,
+                clientX,
+                clientY,
             });
+            //这里自动向下滚动
+
+            autoScroll(clientY, scrollData);
         };
 
         const handleMouseUp = (e: MouseEvent) => {
@@ -223,7 +223,9 @@ export const useTouch = (
                 clientX: e.clientX,
                 clientY: e.clientY,
             });
-
+            scrollData.timer && window.clearTimeout(scrollData.timer);
+            scrollData.timer = null;
+            scrollData.direction = 0;
             document.addEventListener("mousemove", handleMouseMove, true);
             document.addEventListener("mouseup", handleMouseUp, true);
             window.addEventListener("blur", handleMouseCancel, true);
@@ -232,6 +234,7 @@ export const useTouch = (
         if (!mobileStatus) {
             node?.addEventListener("mousedown", handleMouseDown, true);
             return () => {
+                scrollData.timer && window.clearTimeout(scrollData.timer);
                 node?.removeEventListener("mousedown", handleMouseDown, true);
             };
         }

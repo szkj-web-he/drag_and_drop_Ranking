@@ -79,7 +79,6 @@ const Main: React.FC = () => {
             }
             data[item.code] = value;
         }
-        console.log(JSON.stringify(data));
         comms.state = data;
     }, [placementList]);
 

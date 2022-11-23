@@ -50,20 +50,57 @@ export const deepCloneData = <T>(data: T): T => {
     return JSON.parse(JSON.stringify(data)) as T;
 };
 
-export const getScrollValue = (): {
-    x: number;
-    y: number;
-} => {
-    let x = window.scrollX || window.pageXOffset;
-    let y = window.scrollY || window.pageYOffset;
-    const node = document.documentElement || document.body.parentNode;
-    if (!x) {
-        x = (typeof node.scrollLeft == "number" ? node : document.body).scrollLeft;
-    } else if (!y) {
-        y = (typeof node.scrollTop == "number" ? node : document.body).scrollTop;
+export interface AutoScrollProps {
+    /**
+     * 滚动的方向
+     * 0是没有
+     * 1是向下
+     * -1是向上
+     */
+    direction: 0 | 1 | -1;
+    /**
+     * 计时器
+     */
+    timer: number | null;
+}
+
+export const autoScroll = (clientY: number, scrollData: AutoScrollProps, delay = 500): void => {
+    const el = document.getElementsByClassName("wrapperBody")[0];
+
+    if (
+        el instanceof HTMLElement &&
+        clientY > window.innerHeight - 20 &&
+        el.scrollHeight > el.scrollTop + el.offsetHeight
+    ) {
+        //向下
+        if (scrollData.direction === 1 && scrollData.timer) {
+            return;
+        }
+        scrollData.direction = 1;
+        scrollData.timer && window.clearTimeout(scrollData.timer);
+        scrollData.timer = window.setTimeout(() => {
+            scrollData.timer = null;
+            if (el.scrollHeight > el.scrollTop + el.offsetHeight) {
+                el.scrollTop = el.scrollTop + 1;
+                autoScroll(clientY, scrollData, 0);
+            }
+        }, delay);
+    } else if (el instanceof HTMLElement && clientY < 20) {
+        //向上
+        if (scrollData.direction === -1 && scrollData.timer) {
+            return;
+        }
+        scrollData.direction = -1;
+        scrollData.timer && window.clearTimeout(scrollData.timer);
+        scrollData.timer = window.setTimeout(() => {
+            scrollData.timer = null;
+            if (el.scrollTop > 0) {
+                el.scrollTop = el.scrollTop - 1;
+                autoScroll(clientY, scrollData, 0);
+            }
+        }, delay);
+    } else {
+        scrollData.direction = 0;
+        scrollData.timer && window.clearTimeout(scrollData.timer);
     }
-    return {
-        x,
-        y,
-    };
 };
