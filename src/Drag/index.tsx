@@ -6,14 +6,13 @@
  */
 /* <------------------------------------ **** DEPENDENCE IMPORT START **** ------------------------------------ */
 /** This section will include all the necessary dependence for this tsx file */
-import React, { forwardRef, useRef, useState } from "react";
+import React, { forwardRef, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Btn from "../btn";
 import { BoxItem, useDragContext } from "../dragContext";
 import { getScrollValue } from "../getScrollValue";
 import { DragMoveProps, DragPramsProps, PointProps } from "../unit";
 import { useTouch } from "./useTouch";
-import { useEffect } from "react";
 /* <------------------------------------ **** DEPENDENCE IMPORT END **** ------------------------------------ */
 /* <------------------------------------ **** INTERFACE START **** ------------------------------------ */
 /** This section will include all the interface for this tsx file */
@@ -72,6 +71,8 @@ export const Drag = forwardRef<HTMLDivElement, DragProps>(
 
         const timer = useRef<number>();
 
+        const globalClass = useRef<HTMLStyleElement>();
+
         const cRef = useTouch(
             (res) => {
                 //触摸开始
@@ -86,6 +87,15 @@ export const Drag = forwardRef<HTMLDivElement, DragProps>(
                 if (!node) {
                     return;
                 }
+                const pointerStyle = window.getComputedStyle(node, null).cursor;
+                globalClass.current = document.createElement("style");
+                globalClass.current.innerHTML = `
+                *{
+                    cursor:${pointerStyle} !important;
+                }
+                `;
+                document.head.append(globalClass.current);
+
                 const scrollData = getScrollValue();
                 const rect = node.getBoundingClientRect();
                 const rectX = rect.left + scrollData.x;
@@ -155,6 +165,8 @@ export const Drag = forwardRef<HTMLDivElement, DragProps>(
                     clientY: res.clientY,
                 });
 
+                globalClass.current?.remove();
+                globalClass.current = undefined;
                 timer.current && window.clearTimeout(timer.current);
                 point.current = {
                     x: 0,
@@ -169,6 +181,8 @@ export const Drag = forwardRef<HTMLDivElement, DragProps>(
             () => {
                 //触摸取消
                 handleDragCancel?.();
+                globalClass.current?.remove();
+                globalClass.current = undefined;
                 point.current = {
                     x: 0,
                     y: 0,
@@ -188,6 +202,8 @@ export const Drag = forwardRef<HTMLDivElement, DragProps>(
         useEffect(() => {
             return () => {
                 timer.current && window.clearTimeout(timer.current);
+                globalClass.current?.remove();
+                globalClass.current = undefined;
             };
         }, []);
 

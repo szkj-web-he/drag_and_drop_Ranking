@@ -40,7 +40,6 @@ const Temp: React.FC<TempProps> = ({ list, activeId, handleDragMove, handleDragE
         } else {
             arr = [list];
         }
-        console.log(arr);
         return arr;
     }, [colNumber, list]);
     /* <------------------------------------ **** STATE END **** ------------------------------------ */
