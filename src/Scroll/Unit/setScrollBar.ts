@@ -1,6 +1,13 @@
+/**
+ * @file setScrollBar style
+ * @date 2021-12-15
+ * @author xuejie.he
+ * @lastModify xuejie.he 2021-12-15
+ */
+
 export interface PublicDataProps {
     startVal: number;
-    mouseStatus: false | 'vertical' | 'horizontal';
+    mouseStatus: false | "vertical" | "horizontal";
 }
 
 interface ScrollReturn {
@@ -57,10 +64,10 @@ export const setScrollBar = (el: HTMLElement | null): ScrollReturn => {
 
         for (let i = 0; i < parent.children.length; i++) {
             const cEl = parent.children[i];
-            const className = cEl.getAttribute('class');
-            if (className?.includes('scroll_scrollBar__horizontal')) {
+            const className = cEl.getAttribute("class");
+            if (className?.includes("scroll_scrollBar__horizontal")) {
                 hEl = cEl as HTMLElement;
-            } else if (className?.includes('scroll_scrollBar__vertical')) {
+            } else if (className?.includes("scroll_scrollBar__vertical")) {
                 vEl = cEl as HTMLElement;
             }
         }

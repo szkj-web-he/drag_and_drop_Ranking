@@ -30,10 +30,6 @@ export interface ParkingProps {
 
 export interface PublicTempProps {
     /**
-     * 是否为手机端
-     */
-    mobileStatus: boolean;
-    /**
      * 拖拽move的回调
      */
     handleDragMove: (res: { data: OptionProps; to?: string; from?: string }) => void;
@@ -52,4 +48,59 @@ export interface PublicTempProps {
 
 export const deepCloneData = <T>(data: T): T => {
     return JSON.parse(JSON.stringify(data)) as T;
+};
+
+export interface AutoScrollProps {
+    /**
+     * 滚动的方向
+     * 0是没有
+     * 1是向下
+     * -1是向上
+     */
+    direction: 0 | 1 | -1;
+    /**
+     * 计时器
+     */
+    timer: number | null;
+}
+
+export const autoScroll = (clientY: number, scrollData: AutoScrollProps, delay = 200): void => {
+    const el = document.getElementsByClassName("parking_scrollBody")[0];
+    const rect = el.getBoundingClientRect();
+    if (
+        el instanceof HTMLElement &&
+        clientY > rect.top + rect.height - 20 &&
+        el.scrollHeight > el.scrollTop + el.offsetHeight
+    ) {
+        //向下
+        if (scrollData.direction === 1 && scrollData.timer) {
+            return;
+        }
+        scrollData.direction = 1;
+        scrollData.timer && window.clearTimeout(scrollData.timer);
+        scrollData.timer = window.setTimeout(() => {
+            scrollData.timer = null;
+            if (el.scrollHeight > el.scrollTop + el.offsetHeight) {
+                el.scrollTop = el.scrollTop + 1;
+                autoScroll(clientY, scrollData, 0);
+            }
+        }, delay);
+    } else if (el instanceof HTMLElement && clientY < rect.top + 20) {
+        //向上
+        if (scrollData.direction === -1 && scrollData.timer) {
+            return;
+        }
+        scrollData.direction = -1;
+        scrollData.timer && window.clearTimeout(scrollData.timer);
+        scrollData.timer = window.setTimeout(() => {
+            scrollData.timer = null;
+            if (el.scrollTop > 0) {
+                el.scrollTop = el.scrollTop - 1;
+                autoScroll(clientY, scrollData, 0);
+            }
+        }, delay);
+    } else {
+        scrollData.direction = 0;
+        scrollData.timer && window.clearTimeout(scrollData.timer);
+    }
 };

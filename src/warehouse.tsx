@@ -15,12 +15,7 @@ export interface WarehouseProps extends PublicTempProps {
 
 /* <------------------------------------ **** INTERFACE END **** ------------------------------------ */
 /* <------------------------------------ **** FUNCTION COMPONENT START **** ------------------------------------ */
-export const Warehouse: React.FC<WarehouseProps> = ({
-    list,
-    mobileStatus,
-    handleDragMove,
-    handleDragEnd,
-}) => {
+export const Warehouse: React.FC<WarehouseProps> = ({ list, handleDragMove, handleDragEnd }) => {
     const arr = list ?? [];
 
     const content = (
@@ -32,10 +27,6 @@ export const Warehouse: React.FC<WarehouseProps> = ({
                 return (
                     <Drag
                         key={item.code}
-                        value={{
-                            code: item.code,
-                            content: item.content,
-                        }}
                         activeClassName="gray"
                         className="dragItem"
                         handleDragMove={({ name }) => {
@@ -67,19 +58,15 @@ export const Warehouse: React.FC<WarehouseProps> = ({
                 项
             </div>
 
-            {mobileStatus ? (
-                <div className="warehouse_items">{content}</div>
-            ) : (
-                <ScrollComponent
-                    className="warehouse_scrollWrap"
-                    bodyClassName="warehouse_scrollBody"
-                    hidden={{
-                        x: true,
-                    }}
-                >
-                    {content}
-                </ScrollComponent>
-            )}
+            <ScrollComponent
+                className="warehouse_scrollWrap"
+                bodyClassName="warehouse_scrollBody"
+                hidden={{
+                    x: true,
+                }}
+            >
+                {content}
+            </ScrollComponent>
         </div>
     );
 };

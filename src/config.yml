@@ -44,7 +44,7 @@ options:
     ]
 
 # How many options you can ranking
-column: 8
+column: 10
 
 # options instruction
 optionsInstruction: "请排序选项"

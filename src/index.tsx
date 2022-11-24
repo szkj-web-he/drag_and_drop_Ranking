@@ -74,15 +74,15 @@ const Main: React.FC = () => {
         //一维开放
         const options = comms.config.options ?? [];
 
-        const data: Record<string, string> = {};
+        const data: Record<string, number | null> = {};
         for (let i = 0; i < options.length; i++) {
             const item = options[i];
 
-            let value = '';
-            for (let j = 0; j < placementList.length;) {
+            let value: number | null = null;
+            for (let j = 0; j < placementList.length; ) {
                 const _item = placementList[j];
                 if (_item.value?.code === item.code) {
-                    value = String(j + 1);
+                    value = j + 1;
                     j = placementList.length;
                 } else {
                     ++j;
@@ -121,7 +121,7 @@ const Main: React.FC = () => {
         //这里是删除
         let n = -1;
         if (data?.from) {
-            for (let i = 0; i < placementListRef.current.length;) {
+            for (let i = 0; i < placementListRef.current.length; ) {
                 const item = placementListRef.current[i];
                 if (item.id === data.from) {
                     n = i;
@@ -137,7 +137,7 @@ const Main: React.FC = () => {
 
         //这里是添加
         if (data?.to) {
-            for (let i = 0; i < placementListRef.current.length;) {
+            for (let i = 0; i < placementListRef.current.length; ) {
                 const item = placementListRef.current[i];
 
                 if (item.id === data.to) {

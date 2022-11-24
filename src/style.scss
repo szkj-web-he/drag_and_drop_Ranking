@@ -11,7 +11,7 @@ $color: #212121;
 html,
 .wrapper,
 body,
-body > div:not([class], [id]) {
+body > div:first-child {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -85,22 +85,6 @@ body > div:not([class], [id]) {
     &.red {
         color: #ff7745;
     }
-}
-
-.warehouse_items {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    align-content: flex-start;
-    flex-flow: row wrap;
-    margin-top: 8px;
-    padding-bottom: 24px;
-    max-height: 178px;
-    overflow: auto;
-    overflow-x: hidden;
-    min-height: 100px;
-    box-sizing: border-box;
 }
 
 .warehouse_scrollWrap {
@@ -207,13 +191,6 @@ body > div:not([class], [id]) {
     flex: 1 1 auto;
     width: 100%;
     overflow: hidden;
-}
-
-.parking_mobileWrap {
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
 }
 
 .parking_main {
@@ -326,13 +303,3 @@ body > div:not([class], [id]) {
 }
 
 /********** 下方 放置区域 end ******************/
-
-// .dragInput {
-//     width: 1px;
-//     height: 1px;
-//     // visibility: hidden;
-//     // opacity: 0;
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-// }
