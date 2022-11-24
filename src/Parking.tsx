@@ -121,10 +121,6 @@ const Temp: React.FC<TempProps> = ({ list, activeId, handleDragMove, handleDragE
                                         </div>
                                         {item.value && (
                                             <Drag
-                                                value={{
-                                                    code: item.value.code,
-                                                    content: item.value.content,
-                                                }}
                                                 activeClassName="gray"
                                                 handleDragMove={({ name }) => {
                                                     if (item.value) {

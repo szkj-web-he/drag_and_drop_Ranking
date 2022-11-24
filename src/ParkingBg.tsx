@@ -17,6 +17,7 @@ const Temp: React.FC = () => {
     /************* This section will include this component HOOK function *************/
     const ref = useRef<HTMLCanvasElement | null>(null);
 
+    const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
     /* <------------------------------------ **** STATE END **** ------------------------------------ */
     /* <------------------------------------ **** PARAMETER START **** ------------------------------------ */
     /************* This section will include this component parameter *************/
@@ -28,10 +29,15 @@ const Temp: React.FC = () => {
                 return;
             }
             const parent = c.parentElement;
-
             if (!parent) {
                 return;
             }
+            ctxRef.current?.clearRect(
+                0,
+                0,
+                ctxRef.current.canvas.width,
+                ctxRef.current.canvas.height,
+            );
 
             const width = parent.offsetWidth;
             const height = parent.offsetHeight;
@@ -39,55 +45,78 @@ const Temp: React.FC = () => {
             c.width = width;
             c.height = height;
 
-            const ctx = c.getContext("2d");
-
-            if (!ctx) {
+            ctxRef.current = c.getContext("2d");
+            console.log("start");
+            if (!ctxRef.current) {
                 return;
             }
 
             // start draw
-            ctx.beginPath();
+            ctxRef.current.beginPath();
 
-            ctx.strokeStyle = "#0AD7E4";
-            ctx.lineWidth = 2;
+            ctxRef.current.strokeStyle = "#0AD7E4";
+            ctxRef.current.lineWidth = 2;
 
-            ctx.moveTo(1, 42);
-            ctx.lineTo(1, height - 60);
-            ctx.lineTo(24, height - 22);
-            ctx.lineTo(140, height - 22);
-            ctx.lineTo(153, height);
-            ctx.lineTo(width - 106, height);
-            ctx.lineTo(width - 99, height - 14);
-            ctx.lineTo(width - 26, height - 14);
-            ctx.lineTo(width - 26, height - 14);
-            ctx.lineTo(width - 1, height - 56);
-            ctx.lineTo(width - 1, 28);
-            ctx.lineTo(width - 18, 1);
+            ctxRef.current.moveTo(1, 42);
+            ctxRef.current.lineTo(1, height - 60);
+            ctxRef.current.lineTo(24, height - 22);
+            ctxRef.current.lineTo(140, height - 22);
+            ctxRef.current.lineTo(153, height - 1);
+            ctxRef.current.lineTo(width - 106, height - 1);
+            ctxRef.current.lineTo(width - 99, height - 14);
+            ctxRef.current.lineTo(width - 26, height - 14);
+            ctxRef.current.lineTo(width - 26, height - 14);
+            ctxRef.current.lineTo(width - 1, height - 56);
+            ctxRef.current.lineTo(width - 1, 28);
+            ctxRef.current.lineTo(width - 18, 1);
 
             //左右肩的长度
             const leftOrRightLength = (width - 214 - 17 - 25) / 2;
-            ctx.lineTo(leftOrRightLength + 25 + 214, 1);
-            ctx.lineTo(leftOrRightLength + 25 + (214 - 5), 10);
-            ctx.lineTo(leftOrRightLength + 25 + 5, 10);
-            ctx.lineTo(leftOrRightLength + 25, 3);
-            ctx.lineTo(25, 3);
-            ctx.lineTo(1, 42);
-            ctx.closePath();
-            ctx.stroke();
+            ctxRef.current.lineTo(leftOrRightLength + 25 + 214, 1);
+            ctxRef.current.lineTo(leftOrRightLength + 25 + (214 - 5), 10);
+            ctxRef.current.lineTo(leftOrRightLength + 25 + 5, 10);
+            ctxRef.current.lineTo(leftOrRightLength + 25, 3);
+            ctxRef.current.lineTo(25, 3);
+            ctxRef.current.lineTo(1, 42);
+            ctxRef.current.closePath();
+            ctxRef.current.stroke();
 
-            const fillColor = ctx.createLinearGradient(width - 92, 1, 91, height - 10);
+            const fillColor = ctxRef.current.createLinearGradient(width - 92, 1, 91, height - 10);
             fillColor.addColorStop(0, "#D6F8FE");
             fillColor.addColorStop(1, "rgba(226,243,249,0.58)");
-            ctx.fillStyle = fillColor;
-            ctx.fill();
+            ctxRef.current.fillStyle = fillColor;
+            ctxRef.current.fill();
         };
-        fn();
-        window.addEventListener("resize", fn);
 
-        document.fonts.addEventListener("loading", fn);
+        let timer: number | null = null;
+        const resizeFn = () => {
+            timer && window.clearTimeout(timer);
+            timer = window.setTimeout(() => {
+                timer = null;
+                fn();
+            });
+        };
+
+        resizeFn();
+        window.addEventListener("resize", resizeFn);
+
+        document.fonts.addEventListener("loading", resizeFn);
+
+        const imgList = document.getElementsByTagName("img");
+        for (let i = 0; i < imgList.length; i++) {
+            const item = imgList[i];
+            item.addEventListener("load", resizeFn);
+        }
+
         return () => {
-            window.removeEventListener("resize", fn);
-            document.fonts.removeEventListener("loading", fn);
+            window.removeEventListener("resize", resizeFn);
+            timer && window.clearTimeout(timer);
+            document.fonts.removeEventListener("loading", resizeFn);
+            const imgList = document.getElementsByTagName("img");
+            for (let i = 0; i < imgList.length; i++) {
+                const item = imgList[i];
+                item.removeEventListener("load", resizeFn);
+            }
         };
     }, []);
 
