@@ -63,15 +63,15 @@ const Main: React.FC = () => {
         //一维开放
         const options = comms.config.options ?? [];
 
-        const data: Record<string, string> = {};
+        const data: Record<string, number | null> = {};
         for (let i = 0; i < options.length; i++) {
             const item = options[i];
 
-            let value = "";
+            let value: null | number = null;
             for (let j = 0; j < placementList.length; ) {
                 const _item = placementList[j];
                 if (_item.value?.code === item.code) {
-                    value = String(j + 1);
+                    value = j + 1;
                     j = placementList.length;
                 } else {
                     ++j;

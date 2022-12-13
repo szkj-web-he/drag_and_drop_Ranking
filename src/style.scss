@@ -27,8 +27,8 @@ body > div:first-child {
     justify-content: flex-start;
     flex-flow: column nowrap;
     background-image: url("./Image/bg.png");
-    background-size: 100% auto;
-    background-position: 0 90%;
+    background-size: auto 100%;
+    background-position: top center;
     box-sizing: border-box;
     background-repeat: no-repeat;
 }
